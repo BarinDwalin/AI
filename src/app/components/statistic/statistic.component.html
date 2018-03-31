@@ -1,0 +1,17 @@
+<div class="statistic">
+  <div class="row">
+    <div>Герой</div>
+    <div>Состояние</div>
+    <div>Яблок</div>
+  </div>
+  <div *ngFor="let hero of heroes" class="row"
+       [ngClass]="{'selected': hero === selectedHero }"
+       [ngStyle]="(hero !== selectedHero) && {'backgroundColor': hero.renderSettings.backgroundColor }"
+       (click)="select(hero)">
+    <div>{{hero.name}}</div>
+    <div>{{hero.currentAction}}</div>
+    <div>{{hero.inventory.length}}</div>
+  </div>
+</div>
+
+<app-card-hero *ngIf="selectedHero" [hero]="selectedHero"></app-card-hero>

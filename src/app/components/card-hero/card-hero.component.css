@@ -1,0 +1,15 @@
+.card {
+  width: 400px;
+  /* height: 500px;*/
+  border: solid black 5px;
+}
+
+img {
+  max-height: 100px;
+}
+
+.card__hero {
+  display: grid;
+  grid-row-gap: 5px;
+  grid-template-columns: 100px 1fr;
+}

@@ -1,0 +1,23 @@
+:host {
+  position: relative;
+  text-align: center;
+}
+
+.current-action {
+  position: absolute;
+  bottom: 40px;
+  width: 100%;
+  font-size: 10px;
+  color: green;
+  background-color: black;
+}
+
+span {
+  position: absolute;
+  bottom: 2px;
+  width: 100%;
+  font-size: 10px;
+  font-weight: 600;
+  color: red;
+  background-color: black;
+}

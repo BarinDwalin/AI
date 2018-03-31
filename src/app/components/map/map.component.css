@@ -1,0 +1,16 @@
+.map {
+  display: grid;
+  grid-template-rows:    repeat(10, 50px);
+  grid-template-columns: repeat(10, 50px);
+  width: 500px;
+  height: 500px;
+  border: solid black 5px;
+}
+
+.background {
+  z-index: -100;
+}
+
+.cell {
+  border: solid gray 1px;
+}
