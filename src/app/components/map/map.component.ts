@@ -22,7 +22,6 @@ export class MapComponent implements OnInit {
   }
 
   ngOnInit() {
-    setTimeout(() => this.game.run(), 2000);
-    setTimeout(() => this.game.stop(), 10000);
+    this.game.run();
   }
 }

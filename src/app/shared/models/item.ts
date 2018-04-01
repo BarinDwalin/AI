@@ -8,6 +8,8 @@ export class Item {
   name: string;
   type: ItemTypes;
   todoStack: { action: ActionTypes, args?: any }[] = [];
+  /** выполнялись ли действия в данном раунде */
+  activated?: boolean;
 
   protected parent: Item;
   private _inventory: Item[] = [];

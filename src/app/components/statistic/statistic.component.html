@@ -9,7 +9,7 @@
        [ngStyle]="(hero !== selectedHero) && {'backgroundColor': hero.renderSettings.backgroundColor }"
        (click)="select(hero)">
     <div>{{hero.name}}</div>
-    <div>{{hero.currentAction}}</div>
+    <div>X:{{hero.position.x}} Y:{{hero.position.y}} {{hero.currentAction}}</div>
     <div>{{hero.inventory.length}}</div>
   </div>
 </div>

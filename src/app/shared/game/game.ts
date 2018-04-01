@@ -1,4 +1,4 @@
-import { Cell, Hero, ItemTypes } from '../models';
+import { Cell, Hero, ItemTypes, Item } from '../models';
 import { Actions } from './actions';
 import { Map } from './map';
 
@@ -8,26 +8,37 @@ export class Game {
   private active = false;
   private events: Array<() => void> = [];
   private timeout = 100;
+  private actionPoint = 1;
 
   constructor() {
     this.addEvent(() => {
       Game.map.cells.forEach((cell) => {
-        cell.items.filter((item) => item.todoStack.length !== 0).forEach((item) => {
-          // за 1 тик выполняем по 1 действию у каждого объекта
-          const currentAction = item.todoStack.shift();
-          const result = Actions.get(currentAction.action).action(...currentAction.args);
-          if (item.type === ItemTypes.Hero) {
-            (item as Hero).remember(currentAction.action, currentAction.args, result);
+        cell.items.filter((item) => !item.activated && item.todoStack.length !== 0).forEach((item) => {
+          // за 1 ход выполняем у каждого объекта действия на определенную стоимость
+          let currentCost = 0;
+          while (currentCost < this.actionPoint) {
+            const todo = item.todoStack.shift();
+            const action = Actions.get(todo.action);
+            currentCost += action.cost;
+            const result = action.action(...todo.args);
+
+            if (item.type === ItemTypes.Hero) {
+              (item as Hero).remember(todo.action, todo.args, result);
+            }
           }
+          // защита от повторного действия при перемещении по ячейкам
+          item.activated = true;
         });
       });
+      Item.items.forEach((item) => { item.activated = false; });
     });
 
     this.loop();
   }
 
   run() {
-    this.active = true;
+    setTimeout(() => this.active = true, 2000);
+    setTimeout(() => this.stop(), 60000);
   }
   stop() {
     this.active = false;

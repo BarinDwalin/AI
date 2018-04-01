@@ -16,16 +16,17 @@ export class Hero extends Item {
     backgroundColor: 'white',
   };
 
+  private description: string;
   private memorySize = 100;
 
   get position() { return this.parent.position; }
 
-  memory: any[] = [];
-  // todoStack: { action: ActionTypes, args?: any }[] = [];
+  memory: { action: ActionTypes, args: any, result: void | ActionResult }[] = [];
   actions: ActionTypes[] = [];
 
-  constructor(name: string, settings?: RenderSettings) {
+  constructor(name: string, description: string, settings?: RenderSettings) {
     super(name, ItemTypes.Hero);
+    this.description = description;
     this.actions = [ActionTypes.Move, ActionTypes.PickFruits];
 
     if (settings) {
@@ -34,17 +35,22 @@ export class Hero extends Item {
     }
   }
 
-  static createHero(x: number, y: number, ii: ActionTypes): Hero {
+  static createHero(ii: ActionTypes): Hero {
     let type: string;
     let color: string;
+    let description: string;
     switch (ii) {
-      case ActionTypes.ThinkingRandom: type = 'random'; color = 'green'; break;
-      case ActionTypes.ThinkingSearchPathWithFullMap: type = 'search'; color = 'red'; break;
+      case ActionTypes.ThinkingRandom: type = 'random'; color = 'green';
+        description = 'Случайно перемещается по соседним клеткам. Если находит дерево, берет 1 яблоко и перемещается.';
+        break;
+      case ActionTypes.ThinkingSearchPathWithFullMap: type = 'search'; color = 'red';
+        description = 'Перемещается к ближайшему дереву с яблоками. Берет все что есть и ищет новое.';
+        break;
     }
     const name = `${this.heroConter++} ${type}`;
     const renderSettings: RenderSettings = new RenderSettings();
     renderSettings.backgroundColor = color;
-    const hero = new Hero(name, renderSettings);
+    const hero = new Hero(name, description, renderSettings);
 
     const firstAction = { action: ii, args: [hero] };
     hero.todoStack.push(firstAction);
@@ -54,8 +60,9 @@ export class Hero extends Item {
   }
 
   remember(action: ActionTypes, args: any, result: void | ActionResult) {
-    if (this.memory.length < this.memorySize) {
-      this.memory.push({ action, args, result });
+    if (this.memory.length > this.memorySize) {
+      this.memory.shift();
     }
+    this.memory.push({ action, args, result });
   }
 }

@@ -1,3 +1,5 @@
+import * as math from './math';
+
 import { Cell, Hero, Item } from '../models';
 import { ItemFabric } from './item-fabric';
 import { ActionTypes } from './action-types';
@@ -32,22 +34,30 @@ export class Map {
       const x = i - y * this.width;
       this.cells[i] = new Cell({ x, y });
     }
-    this.cells[2].items.push(ItemFabric.createTree());
-    this.cells[22].items.push(ItemFabric.createTree());
-    this.cells[15].items.push(ItemFabric.createTree());
-    this.cells[40].items.push(ItemFabric.createTree());
-    this.cells[55].items.push(ItemFabric.createTree());
-    this.cells[56].items.push(ItemFabric.createTree());
-    this.cells[65].items.push(ItemFabric.createTree());
-    this.cells[66].items.push(ItemFabric.createTree());
-
+    for (let i = 0; i < 10; i++) {
+      const index = math.randomIntFromInterval(0, 99);
+      this.cells[index].addObject(ItemFabric.createTree());
+    }
+    for (let i = 0; i < 5; i++) {
+      const index = math.randomIntFromInterval(0, 99);
+      this.cells[index].addObject(Hero.createHero(ActionTypes.ThinkingRandom));
+    }
+    for (let i = 0; i < 5; i++) {
+      const index = math.randomIntFromInterval(0, 99);
+      this.cells[index].addObject(Hero.createHero(ActionTypes.ThinkingSearchPathWithFullMap));
+    }
+    /* фиксированное размещение
+    [2, 15, 22, 40 55, 56, 65, 66].forEach((index) => {
+      this.cells[index].addObject(ItemFabric.createTree());
+    });
     [[0, 1], [1, 2], [7, 8], [8, 9]].forEach((position) => {
       const index = position[0] + position[1] * this.width;
-      this.cells[index].addObject(Hero.createHero(position[0], position[1], ActionTypes.ThinkingRandom));
+      this.cells[index].addObject(Hero.createHero(ActionTypes.ThinkingRandom));
     });
     [[1, 1], [2, 2], [8, 8], [9, 9]].forEach((position) => {
       const index = position[0] + position[1] * this.width;
-      this.cells[index].addObject(Hero.createHero(position[0], position[1], ActionTypes.ThinkingSearchPathWithFullMap));
+      this.cells[index].addObject(Hero.createHero(ActionTypes.ThinkingSearchPathWithFullMap));
     });
+    */
   }
 }
