@@ -1,3 +1,6 @@
-<span class="current-action">{{tree.currentAction}}</span>
-<img src="../../assets/tree.svg">
-<span>Яблок: {{tree.inventory.length}}.</span>
+<div class="tree"
+     [ngStyle]="{'backgroundImage': 'url(../../assets/tree.svg)' }"
+     [ngStyle]="{'backgroundColor': hero.renderSettings.backgroundColor }">
+  <span class="current-action">{{tree.currentAction | slice:0:9}}</span>
+  <span>Яблок: {{tree.inventory.length}}.</span>
+</div>

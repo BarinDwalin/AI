@@ -1,4 +1,6 @@
-<span class="current-action">{{hero.currentAction}}</span>
-<img src="../../assets/{{hero.renderSettings.img}}"
+<div class="hero"
+     [ngStyle]="{'backgroundImage': 'url(../../assets/' + hero.renderSettings.img + ')' }"
      [ngStyle]="{'backgroundColor': hero.renderSettings.backgroundColor }">
-<span>{{hero.name}}.</span>
+  <span class="current-action">{{hero.currentAction | slice:0:9}}</span>
+  <span>{{hero.name}}.</span>
+</div>

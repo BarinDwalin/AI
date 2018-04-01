@@ -16,6 +16,5 @@ export class TreeComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-    console.log(this.tree);
   }
 }
