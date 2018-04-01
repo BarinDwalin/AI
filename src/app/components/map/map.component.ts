@@ -24,4 +24,16 @@ export class MapComponent implements OnInit {
   ngOnInit() {
     this.game.run();
   }
+
+  getUpItem(cell: Cell) {
+    return cell.items[cell.items.length - 1];
+  }
+
+  getUpItemType(cell: Cell) {
+    if (cell.items.length === 0) {
+      return undefined;
+    } else {
+      return this.getUpItem(cell).type;
+    }
+  }
 }

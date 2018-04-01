@@ -88,7 +88,7 @@ export class Actions {
         return;
       }
     }
-    hero.todoStack.splice(0, 0, ({ action: ActionTypes.Move, args: [{ x, y }, hero] }));
+    hero.todoStack.unshift({ action: ActionTypes.Move, args: [{ x, y }, hero] });
   }
 
   static pickFruits(hero: Hero, tree: Item) {

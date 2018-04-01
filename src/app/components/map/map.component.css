@@ -7,10 +7,7 @@
   border: solid black 5px;
 }
 
-.background {
-  z-index: -100;
-}
-
 .cell {
+  z-index: -100;
   border: solid gray 1px;
 }

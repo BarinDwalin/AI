@@ -1,11 +1,8 @@
 <div class="map">
-  <div *ngFor="let cell of map.cells" class="cell">
-    <img *ngIf="cell.items.length === 0"
-         src="../../assets/{{cell.renderSettings.img}}"
-         class="background">
-         <!--[ngStyle]="{'backgroundColor': cell.renderSettings.backgroundColor }"-->
-    <app-tree *ngIf="cell.items[0]?.type === itemTypesEnum.Tree && cell.items[1]?.type !== itemTypesEnum.Hero" [tree]="cell.items[0]"></app-tree>
-    <app-hero *ngIf="cell.items[0]?.type === itemTypesEnum.Hero" [hero]="cell.items[0]"></app-hero>
-    <app-hero *ngIf="cell.items[1]?.type === itemTypesEnum.Hero" [hero]="cell.items[1]"></app-hero>
+  <div *ngFor="let cell of map.cells" [ngSwitch]="getUpItemType(cell)"
+       class="cell"
+       [ngStyle]="!cell.items.length && { 'backgroundImage': 'url(../../assets/' + cell.renderSettings.img + ')' }">
+    <app-tree *ngSwitchCase="itemTypesEnum.Tree" [tree]="getUpItem(cell)"></app-tree>
+    <app-hero *ngSwitchCase="itemTypesEnum.Hero" [hero]="getUpItem(cell)"></app-hero>
   </div>
 </div>
