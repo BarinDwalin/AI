@@ -3,11 +3,12 @@ import { Actions } from './actions';
 import { Map } from './map';
 
 export class Game {
-  static map: Map = new Map();
+  static map: Map;
 
-  private active = false;
+  active = false;
+  timeout = 100;
+
   private events: Array<() => void> = [];
-  private timeout = 100;
   private actionPoint = 1;
 
   constructor() {
@@ -32,13 +33,19 @@ export class Game {
       });
       Item.items.forEach((item) => { item.activated = false; });
     });
+  }
 
-    this.loop();
+  createMap(
+    treesCount: number,
+    heroesThinkingRandomCount: number,
+    heroesThinkingSearchPathWithFullMapCount: number
+  ) {
+    Game.map = new Map(treesCount, heroesThinkingRandomCount, heroesThinkingSearchPathWithFullMapCount);
   }
 
   run() {
-    setTimeout(() => this.active = true, 2000);
-    setTimeout(() => this.stop(), 60000);
+    this.active = true;
+    this.loop();
   }
   stop() {
     this.active = false;
@@ -49,10 +56,12 @@ export class Game {
 
   loop() {
     let i = 0;
-    setInterval(() => {
+    const interval = setInterval(() => {
       if (this.active) {
         console.log('loop', i++);
         this.events.forEach((event) => event());
+      } else {
+        clearInterval(interval);
       }
     }, this.timeout);
   }

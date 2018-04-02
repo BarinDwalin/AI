@@ -10,8 +10,12 @@ export class Map {
   height = 10;
   size = this.width * this.height;
 
-  constructor() {
-    this.createMap();
+  constructor(
+    treesCount: number,
+    heroesThinkingRandomCount: number,
+    heroesThinkingSearchPathWithFullMapCount: number
+  ) {
+    this.createMap(treesCount, heroesThinkingRandomCount, heroesThinkingSearchPathWithFullMapCount);
   }
 
   getCell(x: number, y: number) {
@@ -27,22 +31,26 @@ export class Map {
     newCell.putInInventory(hero);
   }
 
-  private createMap() {
+  private createMap(
+    treesCount: number,
+    heroesThinkingRandomCount: number,
+    heroesThinkingSearchPathWithFullMapCount: number
+  ) {
     this.cells.length = this.size;
     for (let i = 0; i < this.size; i++) {
       const y = Math.floor(i / this.width);
       const x = i - y * this.width;
       this.cells[i] = new Cell({ x, y });
     }
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < treesCount; i++) {
       const index = math.randomIntFromInterval(0, 99);
       this.cells[index].addObject(ItemFabric.createTree());
     }
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < heroesThinkingRandomCount; i++) {
       const index = math.randomIntFromInterval(0, 99);
       this.cells[index].addObject(Hero.createHero(ActionTypes.ThinkingRandom));
     }
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < heroesThinkingSearchPathWithFullMapCount; i++) {
       const index = math.randomIntFromInterval(0, 99);
       this.cells[index].addObject(Hero.createHero(ActionTypes.ThinkingSearchPathWithFullMap));
     }

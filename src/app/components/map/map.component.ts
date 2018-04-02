@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 import { Game, Actions } from '../../shared/game';
 import { Cell, Item, ItemTypes, Hero } from '../../shared/models';
@@ -11,18 +11,16 @@ import { ActionTypes } from '../../shared/game/action-types';
   styleUrls: ['./map.component.css']
 })
 export class MapComponent implements OnInit {
-  itemTypesEnum = ItemTypes;  // т.к. enum не поддерживается в шаблонах
+  @Input() game: Game;
 
-  private game: Game;
+  itemTypesEnum = ItemTypes;  // т.к. enum не поддерживается в шаблонах
 
   get map() { return Game.map; }
 
   constructor() {
-    this.game = new Game();
   }
 
   ngOnInit() {
-    this.game.run();
   }
 
   getUpItem(cell: Cell) {
