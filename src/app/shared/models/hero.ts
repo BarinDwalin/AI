@@ -24,10 +24,14 @@ export class Hero extends Item {
   memory: { action: ActionTypes, args: any, result: void | ActionResult }[] = [];
   actions: ActionTypes[] = [];
 
+  /** дальность видимости на карте */
+  visibilityDistance: number;
+
   constructor(name: string, description: string, settings?: RenderSettings) {
     super(name, ItemTypes.Hero);
     this.description = description;
     this.actions = [ActionTypes.Move, ActionTypes.PickFruits];
+    this.visibilityDistance = 3;
 
     if (settings) {
       this.renderSettings.img = settings.img || this.renderSettings.img;
@@ -45,6 +49,10 @@ export class Hero extends Item {
         break;
       case ActionTypes.ThinkingSearchPathWithFullMap: type = 'search'; color = 'red';
         description = 'Перемещается к ближайшему дереву с яблоками. Берет все что есть и ищет новое.';
+        break;
+      case ActionTypes.ThinkingSearchPathWithVisibility: type = 'searchRadius'; color = 'orange';
+        description = `Перемещается к ближайшему дереву с яблоками (в радиусе видимости 3 клеток).
+          Берет все что есть и ищет новое. Если не найдено, случайно перемещается по соседним клеткам.`;
         break;
     }
     const name = `${this.heroConter++} ${type}`;

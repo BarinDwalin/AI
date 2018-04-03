@@ -14,6 +14,7 @@ export class AppComponent implements OnInit {
   treesCount = 10;
   heroesThinkingRandomCount = 5;
   heroesThinkingSearchPathWithFullMapCount = 5;
+  heroesThinkingSearchPathWithVisibilityCount = 5;
 
   get isGameRunning() { return !!Game.map; }
 
@@ -28,7 +29,8 @@ export class AppComponent implements OnInit {
     this.game.createMap(
       this.treesCount,
       this.heroesThinkingRandomCount,
-      this.heroesThinkingSearchPathWithFullMapCount
+      this.heroesThinkingSearchPathWithFullMapCount,
+      this.heroesThinkingSearchPathWithVisibilityCount,
     );
     Game.map = Game.map;
     console.log(Game.map);
@@ -58,6 +60,8 @@ export class AppComponent implements OnInit {
       break;
       case 'ThinkingSearchPathWithFullMap': this.heroesThinkingSearchPathWithFullMapCount += 1;
       break;
+      case 'ThinkingSearchPathWithVisibility': this.heroesThinkingSearchPathWithVisibilityCount += 1;
+      break;
     }
   }
   removeHero(hero: string) {
@@ -65,6 +69,8 @@ export class AppComponent implements OnInit {
       case 'ThinkingRandom': this.heroesThinkingRandomCount -= 1;
       break;
       case 'ThinkingSearchPathWithFullMap': this.heroesThinkingSearchPathWithFullMapCount -= 1;
+      break;
+      case 'ThinkingSearchPathWithVisibility': this.heroesThinkingSearchPathWithVisibilityCount -= 1;
       break;
     }
   }

@@ -38,9 +38,13 @@ export class Game {
   createMap(
     treesCount: number,
     heroesThinkingRandomCount: number,
-    heroesThinkingSearchPathWithFullMapCount: number
+    heroesThinkingSearchPathWithFullMapCount: number,
+    heroesThinkingSearchPathWithVisibilityCount: number,
   ) {
-    Game.map = new Map(treesCount, heroesThinkingRandomCount, heroesThinkingSearchPathWithFullMapCount);
+    Game.map = new Map(
+      treesCount,
+      heroesThinkingRandomCount, heroesThinkingSearchPathWithFullMapCount, heroesThinkingSearchPathWithVisibilityCount,
+    );
   }
 
   run() {

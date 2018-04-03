@@ -11,6 +11,7 @@ export class Actions {
   static actionList: Action[] = [
     // интеллектуальные команды
     new Action(ActionTypes.ThinkingRandom, Actions.thinkingRandom, 0),
+    new Action(ActionTypes.ThinkingSearchPathWithVisibility, Actions.thinkingSearchPathWithVisibility, 0),
     new Action(ActionTypes.ThinkingSearchPathWithFullMap, Actions.thinkingSearchPathWithFullMap),
 
     // общие команды
@@ -150,23 +151,92 @@ export class Actions {
       hero.todoStack.push({ action: ActionTypes.ThinkingSearchPathWithFullMap, args: [hero] });
       return;
     }
-    // прокладывание пути по x
-    let xPath = hero.position.x;
-    let yPath = hero.position.y;
-    for (let i = Math.abs(hero.position.x - nearestTree.position.x); i > 0; i--) {
-      xPath += (hero.position.x - nearestTree.position.x > 0 ? -1 : 1);
-      hero.todoStack.push({ action: ActionTypes.Move, args: [{ x: xPath, y: yPath }, hero] });
-    }
-    // прокладывание пути по y
-    for (let i = Math.abs(hero.position.y - nearestTree.position.y); i > 0; i--) {
-      yPath += (hero.position.y - nearestTree.position.y > 0 ? -1 : 1);
-      hero.todoStack.push({ action: ActionTypes.Move, args: [{ x: xPath, y: yPath }, hero] });
-    }
+    // прокладывание пути
+    Actions.createPathToPoint(
+      hero.position.x, hero.position.y, nearestTree.position.x, nearestTree.position.y
+    ).forEach((step) => {
+      hero.todoStack.push({ action: ActionTypes.Move, args: [{ x: step.x, y: step.y }, hero] });
+    });
     // сбор
     hero.todoStack.push({ action: ActionTypes.PickFruits, args: [hero, nearestTree] });
     // повтор
     hero.todoStack.push({ action: ActionTypes.ThinkingSearchPathWithFullMap, args: [hero] });
   }
+  /** ИИ v2 */
+  static thinkingSearchPathWithVisibility(hero: Hero) {
+    const currentCell = Game.map.getCell(hero.position.x, hero.position.y);
+    // сбор пока возможен
+    const indexTree = currentCell.items.findIndex((item) => item.type === ItemTypes.Tree &&
+      item.inventory.some((itemTree) => itemTree.type === ItemTypes.Food));
+    if (indexTree !== -1) {
+      const tree = currentCell.items[indexTree];
+      hero.todoStack.push({ action: ActionTypes.PickFruits, args: [hero, tree] });
+      hero.todoStack.push({ action: ActionTypes.ThinkingSearchPathWithVisibility, args: [hero] });
+      return;
+    }
+    // проверяем область видимости
+    const treeFilter = (item) => item.type === ItemTypes.Tree &&
+      item.inventory.some((itemTree) => itemTree.type === ItemTypes.Food);
+    const nearestTree = Actions.searchNearestObjectInArea(
+      hero.position.x, hero.position.y, hero.visibilityDistance, treeFilter
+    );
+    if (nearestTree) {
+      // идем на видимую цель
+      Actions.createPathToPoint(
+        hero.position.x, hero.position.y, nearestTree.position.x, nearestTree.position.y
+      ).forEach((step) => {
+        hero.todoStack.push({ action: ActionTypes.Move, args: [{ x: step.x, y: step.y }, hero] });
+      });
+      // сбор
+      hero.todoStack.push({ action: ActionTypes.PickFruits, args: [hero, nearestTree] });
+    } else {
+      // идем рандомно несколько шагов
+      for (let i = 0; i < math.randomIntFromInterval(1, 5); i++) {
+        hero.todoStack.push({ action: ActionTypes.MoveRandomDirection, args: [hero] });
+      }
+    }
+    // повтор
+    hero.todoStack.push({ action: ActionTypes.ThinkingSearchPathWithVisibility, args: [hero] });
+  }
 
+  //#endregion
+
+  //#region вспомогательные функции
+
+  /** поиск на карте ближайшего объекта в радиусе, по фильтру */
+  static searchNearestObjectInArea(x: number, y: number, radius: number, filter: (item: Item) => boolean) {
+    const items: Item[] = [];
+    Game.map.getCellsInArea(x, y, radius).forEach((cell) => {
+      items.push(...cell.items.filter(filter));
+    });
+
+    let nearestItem: Item;
+    let pathLength: number;
+    items.forEach((item) => {
+      const currentPathLength = Math.pow(x - item.position.x, 2) + Math.pow(y - item.position.y, 2);
+      if (!nearestItem || currentPathLength < pathLength) {
+        nearestItem = item;
+        pathLength = currentPathLength;
+      }
+    });
+    return nearestItem;
+  }
+
+  static createPathToPoint(startX: number, startY: number, targetX: number, targetY: number) {
+    const path: { x: number, y: number }[] = [];
+    // прокладывание пути по x
+    let xPath = startX;
+    let yPath = startY;
+    for (let i = Math.abs(startX - targetX); i > 0; i--) {
+      xPath += (startX - targetX > 0 ? -1 : 1);
+      path.push({ x: xPath, y: yPath });
+    }
+    // прокладывание пути по y
+    for (let i = Math.abs(startY - targetY); i > 0; i--) {
+      yPath += (startY - targetY > 0 ? -1 : 1);
+      path.push({ x: xPath, y: yPath });
+    }
+    return path;
+  }
   //#endregion
 }

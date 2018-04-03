@@ -24,6 +24,12 @@
     <button (click)="addHero('ThinkingSearchPathWithFullMap')">+</button>
     <button (click)="removeHero('ThinkingSearchPathWithFullMap')">-</button>
   </div>
+  <div class="counter">
+    Героев класса 3
+    <input type="number" [(ngModel)]="heroesThinkingSearchPathWithVisibilityCount">
+    <button (click)="addHero('ThinkingSearchPathWithVisibility')">+</button>
+    <button (click)="removeHero('ThinkingSearchPathWithVisibility')">-</button>
+  </div>
   <div class="new-game">
     <button (click)="createGame()">Создать игру</button>
   </div>

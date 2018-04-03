@@ -10,16 +10,43 @@ export class Map {
   height = 10;
   size = this.width * this.height;
 
+  get bounds() { return {
+      minX: 0,
+      maxX: this.width - 1,
+      minY: 0,
+      maxY: this.height - 1,
+    };
+  }
+
   constructor(
     treesCount: number,
     heroesThinkingRandomCount: number,
-    heroesThinkingSearchPathWithFullMapCount: number
+    heroesThinkingSearchPathWithFullMapCount: number,
+    heroesThinkingSearchPathWithVisibilityCount: number,
   ) {
-    this.createMap(treesCount, heroesThinkingRandomCount, heroesThinkingSearchPathWithFullMapCount);
+    this.createMap(
+      treesCount,
+      heroesThinkingRandomCount, heroesThinkingSearchPathWithFullMapCount, heroesThinkingSearchPathWithVisibilityCount,
+    );
   }
 
   getCell(x: number, y: number) {
     return this.cells[y * this.width + x];
+  }
+  getCellsInArea(x: number, y: number, radius: number) {
+    const cells: Cell[] = [];
+    const left = Math.max(this.bounds.minX, x - radius);
+    const right = Math.min(this.bounds.maxX, x + radius);
+    const top = Math.max(this.bounds.minY, y - radius);
+    const bottom = Math.min(this.bounds.maxY, y + radius);
+    for (let i = left; i <= right; i++) {
+      for (let j = top; j <= bottom; j++) {
+        if (Math.pow(x - i, 2) + Math.pow(y - j, 2) < Math.pow(radius, 2)) {
+          cells.push(this.getCell(i, j));
+        }
+      }
+    }
+    return cells;
   }
 
   moveHero(positions: {x: number, y: number}, hero: Hero) {
@@ -34,7 +61,8 @@ export class Map {
   private createMap(
     treesCount: number,
     heroesThinkingRandomCount: number,
-    heroesThinkingSearchPathWithFullMapCount: number
+    heroesThinkingSearchPathWithFullMapCount: number,
+    heroesThinkingSearchPathWithVisibilityCount: number,
   ) {
     this.cells.length = this.size;
     for (let i = 0; i < this.size; i++) {
@@ -53,6 +81,10 @@ export class Map {
     for (let i = 0; i < heroesThinkingSearchPathWithFullMapCount; i++) {
       const index = math.randomIntFromInterval(0, 99);
       this.cells[index].addObject(Hero.createHero(ActionTypes.ThinkingSearchPathWithFullMap));
+    }
+    for (let i = 0; i < heroesThinkingSearchPathWithVisibilityCount; i++) {
+      const index = math.randomIntFromInterval(0, 99);
+      this.cells[index].addObject(Hero.createHero(ActionTypes.ThinkingSearchPathWithVisibility));
     }
     /* фиксированное размещение
     [2, 15, 22, 40 55, 56, 65, 66].forEach((index) => {
