@@ -2,5 +2,5 @@
      [ngStyle]="{ 'backgroundImage': 'url(../../assets/' + hero.renderSettings.img + ')',
        'backgroundColor': hero.renderSettings.backgroundColor }">
   <span class="current-action">{{hero.currentAction | slice:0:9}}</span>
-  <span>{{hero.name}}.</span>
+  <span>{{hero.name | slice:0:10}}</span>
 </div>

@@ -12,7 +12,7 @@ export class Actions {
     // интеллектуальные команды
     new Action(ActionTypes.ThinkingRandom, Actions.thinkingRandom, 0),
     new Action(ActionTypes.ThinkingSearchPathWithVisibility, Actions.thinkingSearchPathWithVisibility, 0),
-    new Action(ActionTypes.ThinkingSearchPathWithFullMap, Actions.thinkingSearchPathWithFullMap),
+    new Action(ActionTypes.ThinkingSearchPathWithFullMap, Actions.thinkingSearchPathWithFullMap, 0),
 
     // общие команды
     new Action(ActionTypes.Growing, Actions.growing),
@@ -148,6 +148,7 @@ export class Actions {
       }
     });
     if (!nearestTree) {
+      hero.todoStack.push({ action: ActionTypes.Waiting });
       hero.todoStack.push({ action: ActionTypes.ThinkingSearchPathWithFullMap, args: [hero] });
       return;
     }
