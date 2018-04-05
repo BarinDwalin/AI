@@ -4,7 +4,6 @@ import { ActionResult } from '../game/action-result';
 import { Item } from './item';
 import { ItemTypes } from './item-types';
 import { RenderSettings } from './render-settings';
-import { StaticInjector } from '@angular/core/src/di/injector';
 
 export class Hero extends Item {
   static heroConter = 0;
@@ -15,8 +14,8 @@ export class Hero extends Item {
     img: 'hero.svg',
     backgroundColor: 'white',
   };
+  description: string;
 
-  private description: string;
   private memorySize = 100;
 
   get position() { return this.parent.position; }
