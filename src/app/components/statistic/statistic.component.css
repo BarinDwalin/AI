@@ -10,8 +10,8 @@
 
 .row {
   display: grid;
-  grid-template-columns: 70px 1fr 50px;
-  grid-column-gap: 20px;
+  grid-template-columns: 100px 1fr 50px;
+  grid-column-gap: 10px;
   border: solid gray 1px;
 }
 
