@@ -24,7 +24,7 @@ export class Game {
             const result = action.action(...todo.args);
 
             if (item.type === ItemTypes.Hero) {
-              (item as Hero).remember(todo.action, todo.args, result);
+              (item as Hero).memory.rememberLastAction(todo.action, todo.args, result);
             }
           }
           // защита от повторного действия при перемещении по ячейкам

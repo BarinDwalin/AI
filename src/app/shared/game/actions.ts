@@ -70,8 +70,8 @@ export class Actions {
     // защита от возврата
     let currentMove;
     let previousMove;
-    for (let i = hero.memory.length - 1; i >= 0; i--) {
-      const element = hero.memory[i];
+    for (let i = hero.memory.lastActions.length - 1; i >= 0; i--) {
+      const element = hero.memory.lastActions[i];
       if (element.action === ActionTypes.Move) {
         if (!currentMove) {
           currentMove = element;

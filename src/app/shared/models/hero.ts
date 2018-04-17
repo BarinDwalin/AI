@@ -3,6 +3,7 @@ import { ActionResult } from '../game/action-result';
 
 import { Item } from './item';
 import { ItemTypes } from './item-types';
+import { Memory } from './memory';
 import { RenderSettings } from './render-settings';
 
 export class Hero extends Item {
@@ -15,22 +16,20 @@ export class Hero extends Item {
     backgroundColor: 'white',
   };
   description: string;
-
-  private memorySize = 100;
-
-  get position() { return this.parent.position; }
-
-  memory: { action: ActionTypes, args: any, result: void | ActionResult }[] = [];
-  actions: ActionTypes[] = [];
-
+  memory: Memory;
   /** дальность видимости на карте */
   visibilityDistance: number;
+
+  private actions: ActionTypes[] = [];
+
+  get position() { return this.parent.position; }
 
   constructor(name: string, description: string, settings?: RenderSettings) {
     super(name, ItemTypes.Hero);
     this.description = description;
     this.actions = [ActionTypes.Move, ActionTypes.PickFruits];
     this.visibilityDistance = 3;
+    this.memory = new Memory();
 
     if (settings) {
       this.renderSettings.img = settings.img || this.renderSettings.img;
@@ -64,12 +63,5 @@ export class Hero extends Item {
 
     this.heroes.push(hero);
     return hero;
-  }
-
-  remember(action: ActionTypes, args: any, result: void | ActionResult) {
-    if (this.memory.length > this.memorySize) {
-      this.memory.shift();
-    }
-    this.memory.push({ action, args, result });
   }
 }

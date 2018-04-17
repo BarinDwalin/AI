@@ -31,7 +31,7 @@ export class Map {
   }
 
   getCell(x: number, y: number) {
-    return this.cells[y * this.width + x];
+    return this.cells[this.getCellIndex(x, y)];
   }
   getCellsInArea(x: number, y: number, radius: number) {
     const cells: Cell[] = [];
@@ -53,6 +53,11 @@ export class Map {
     const newCell = this.getCell(positions.x, positions.y);
     const oldCell = this.getCell(hero.position.x, hero.position.y);
     const heroIndex = oldCell.items.findIndex((item) => item === hero);
+
+    // осмотр мира
+    this.getCellsInArea(positions.x, positions.y, hero.visibilityDistance).forEach((cell) => {
+      hero.memory.rememberItemsInCell(this.getCellIndex(positions.x, positions.y), cell.items);
+    });
 
     oldCell.items.splice(heroIndex, 1);
     newCell.putInInventory(hero);
@@ -86,18 +91,8 @@ export class Map {
       const index = math.randomIntFromInterval(0, 99);
       this.cells[index].addObject(Hero.createHero(ActionTypes.ThinkingSearchPathWithVisibility));
     }
-    /* фиксированное размещение
-    [2, 15, 22, 40 55, 56, 65, 66].forEach((index) => {
-      this.cells[index].addObject(ItemFabric.createTree());
-    });
-    [[0, 1], [1, 2], [7, 8], [8, 9]].forEach((position) => {
-      const index = position[0] + position[1] * this.width;
-      this.cells[index].addObject(Hero.createHero(ActionTypes.ThinkingRandom));
-    });
-    [[1, 1], [2, 2], [8, 8], [9, 9]].forEach((position) => {
-      const index = position[0] + position[1] * this.width;
-      this.cells[index].addObject(Hero.createHero(ActionTypes.ThinkingSearchPathWithFullMap));
-    });
-    */
+  }
+  private getCellIndex(x: number, y: number) {
+    return y * this.width + x;
   }
 }
