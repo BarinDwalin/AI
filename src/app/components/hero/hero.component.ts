@@ -9,6 +9,7 @@ import { Hero } from '../../shared/models';
 })
 export class HeroComponent implements OnInit {
   @Input() hero: Hero;
+  @Input() selected: boolean;
 
   constructor() { }
 

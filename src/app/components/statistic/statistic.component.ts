@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Hero } from '../../shared/models';
+import { MapService } from '../../shared/services';
 
 @Component({
   selector: 'app-statistic',
@@ -11,7 +12,9 @@ export class StatisticComponent implements OnInit {
   heroes: Hero[];
   selectedHero: Hero;
 
-  constructor() {
+  constructor(
+    private mapService: MapService,
+  ) {
     this.heroes = Hero.heroes;
   }
 
@@ -24,5 +27,6 @@ export class StatisticComponent implements OnInit {
     } else {
       this.selectedHero = hero;
     }
+    this.mapService.setSelectedHero(this.selectedHero);
   }
 }

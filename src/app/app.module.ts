@@ -10,6 +10,8 @@ import { TreeComponent } from './components/tree/tree.component';
 import { HeroComponent } from './components/hero/hero.component';
 import { CardHeroComponent } from './components/card-hero/card-hero.component';
 
+import { MapService } from './shared/services';
+
 
 @NgModule({
   declarations: [
@@ -24,7 +26,7 @@ import { CardHeroComponent } from './components/card-hero/card-hero.component';
     BrowserModule,
     FormsModule,
   ],
-  providers: [],
+  providers: [MapService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

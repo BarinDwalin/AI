@@ -1,8 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs/Subscription';
 
-import { Game, Actions } from '../../shared/game';
+import { Game } from '../../shared/game';
 import { Cell, Item, ItemTypes, Hero } from '../../shared/models';
-import { ActionTypes } from '../../shared/game/action-types';
+import { MapService } from '../../shared/services';
 
 
 @Component({
@@ -10,17 +11,27 @@ import { ActionTypes } from '../../shared/game/action-types';
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.css']
 })
-export class MapComponent implements OnInit {
+export class MapComponent implements OnInit, OnDestroy {
   @Input() game: Game;
 
   itemTypesEnum = ItemTypes;  // т.к. enum не поддерживается в шаблонах
+  selectedHero: Hero;
+
+  private subscriptions: Subscription[] = [];
 
   get map() { return Game.map; }
 
-  constructor() {
-  }
+  constructor(
+    private mapService: MapService,
+  ) { }
 
   ngOnInit() {
+    this.subscriptions.push(this.mapService.selectedHero$.subscribe((hero) => {
+      this.selectedHero = hero;
+    }));
+  }
+  ngOnDestroy() {
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 
   getUpItem(cell: Cell) {

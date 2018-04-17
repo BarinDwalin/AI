@@ -1,6 +1,7 @@
 <div class="hero"
+     [ngClass]="{ 'selected': selected }"
      [ngStyle]="{ 'backgroundImage': 'url(../../assets/' + hero.renderSettings.img + ')',
-       'backgroundColor': hero.renderSettings.backgroundColor }">
+       'backgroundColor': selected ? 'gold' : hero.renderSettings.backgroundColor }">
   <span class="current-action">{{hero.currentAction | slice:0:9}}</span>
   <span>{{hero.name | slice:0:10}}</span>
 </div>
