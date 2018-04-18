@@ -1,7 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 
-import { Game } from '../../shared/game';
+import { Game, Map } from '../../shared/game';
 import { Cell, Item, ItemTypes, Hero } from '../../shared/models';
 import { MapService } from '../../shared/services';
 
@@ -20,6 +20,15 @@ export class MapComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
 
   get map() { return Game.map; }
+
+  get shortTermMemoryMap() {
+    // подготовка карты
+    const cells: Cell[] = Map.createEmptyMap(this.map.size, this.map.width);
+    this.selectedHero.memory.shortTerm.forEach((info) => {
+      cells[info.cell].items.push(info.item);
+    });
+    return cells;
+  }
 
   constructor(
     private mapService: MapService,

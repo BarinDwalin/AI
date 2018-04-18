@@ -1,6 +1,6 @@
 import * as math from './math';
 
-import { Cell, Hero, Item } from '../models';
+import { Cell, Hero, Item, ItemTypes } from '../models';
 import { ItemFabric } from './item-fabric';
 import { ActionTypes } from './action-types';
 
@@ -28,6 +28,22 @@ export class Map {
       treesCount,
       heroesThinkingRandomCount, heroesThinkingSearchPathWithFullMapCount, heroesThinkingSearchPathWithVisibilityCount,
     );
+    // все персонажи осматриваются
+    this.cells.forEach((cell) => {
+      cell.items.filter((item) => item.type === ItemTypes.Hero).forEach((item) => {
+        this.saveNearestObjects(cell.position, item as Hero);
+      });
+    });
+  }
+
+  static createEmptyMap(size: number, width: number) {
+    const cells: Cell[] = [];
+    for (let i = 0; i < size; i++) {
+      const y = Math.floor(i / width);
+      const x = i - y * width;
+      cells[i] = new Cell({ x, y });
+    }
+    return cells;
   }
 
   getCell(x: number, y: number) {
@@ -49,15 +65,13 @@ export class Map {
     return cells;
   }
 
-  moveHero(positions: {x: number, y: number}, hero: Hero) {
-    const newCell = this.getCell(positions.x, positions.y);
+  moveHero(position: {x: number, y: number}, hero: Hero) {
+    const newCell = this.getCell(position.x, position.y);
     const oldCell = this.getCell(hero.position.x, hero.position.y);
     const heroIndex = oldCell.items.findIndex((item) => item === hero);
 
     // осмотр мира
-    this.getCellsInArea(positions.x, positions.y, hero.visibilityDistance).forEach((cell) => {
-      hero.memory.rememberItemsInCell(this.getCellIndex(positions.x, positions.y), cell.items);
-    });
+    this.saveNearestObjects(position, hero);
 
     oldCell.items.splice(heroIndex, 1);
     newCell.putInInventory(hero);
@@ -69,12 +83,7 @@ export class Map {
     heroesThinkingSearchPathWithFullMapCount: number,
     heroesThinkingSearchPathWithVisibilityCount: number,
   ) {
-    this.cells.length = this.size;
-    for (let i = 0; i < this.size; i++) {
-      const y = Math.floor(i / this.width);
-      const x = i - y * this.width;
-      this.cells[i] = new Cell({ x, y });
-    }
+    this.cells = Map.createEmptyMap(this.size, this.width);
     for (let i = 0; i < treesCount; i++) {
       const index = math.randomIntFromInterval(0, 99);
       this.cells[index].addObject(ItemFabric.createTree());
@@ -94,5 +103,12 @@ export class Map {
   }
   private getCellIndex(x: number, y: number) {
     return y * this.width + x;
+  }
+  private saveNearestObjects(position: {x: number, y: number}, hero: Hero) {
+    this.getCellsInArea(position.x, position.y, hero.visibilityDistance)
+    .filter((cell) => cell.items.length !== 0)
+    .forEach((cell) => {
+      hero.memory.rememberItemsInCell(this.getCellIndex(cell.position.x, cell.position.y), cell.items);
+    });
   }
 }

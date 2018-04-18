@@ -1,5 +1,5 @@
 <div class="tree"
      [ngStyle]="{'backgroundImage': 'url(../../assets/tree.svg)' }">
   <span class="current-action">{{tree.currentAction | slice:0:9}}</span>
-  <span>Яблок: {{tree.inventory.length}}.</span>
+  <span>Яблок: {{tree.inventory?.length}}.</span>
 </div>

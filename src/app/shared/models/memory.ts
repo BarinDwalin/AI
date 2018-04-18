@@ -15,7 +15,7 @@ export class Memory {
 
   private memorySize = {
     lastActions: 100,
-    shortTerm: 100,
+    shortTerm: 30,
     longTerm: 10000,
   };
 
@@ -45,6 +45,12 @@ export class Memory {
 
     // обновляем данные
     items.forEach((item) => {
+      if (this.shortTerm.length >= this.memorySize.shortTerm) {
+        this.shortTerm.shift();
+      }
+      if (this.longTerm.length >= this.memorySize.longTerm) {
+        this.longTerm.shift();
+      }
       this.rememberItem(cell, item);
       this.rememberTypeItem(cell, item.type);
     });
