@@ -15,7 +15,7 @@ export class MapComponent implements OnInit, OnDestroy {
   @Input() game: Game;
   @Input() memoryType: 'shortTerm' | 'longTerm';
 
-  itemTypesEnum = ItemTypes;  // т.к. enum не поддерживается в шаблонах
+  itemTypesEnum = ItemTypes; // т.к. enum не поддерживается в шаблонах
   selectedHero: Hero;
 
   private subscriptions: Subscription[] = [];
@@ -27,6 +27,21 @@ export class MapComponent implements OnInit, OnDestroy {
     const cells: Cell[] = Map.createEmptyMap(this.map.size, this.map.width);
     this.selectedHero.memory.shortTerm.forEach((info) => {
       cells[info.cell].items.push(info.item);
+    });
+    return cells;
+  }
+  get longTermMemoryMap() {
+    // подготовка карты
+    const cells: string[] = [];
+    cells.length = this.map.size;
+    cells.fill('grass.svg');
+    this.selectedHero.memory.longTerm.forEach((info) => {
+      let img: string;
+      switch (info.item) {
+        case ItemTypes.Hero: img = 'hero.svg'; break;
+        case ItemTypes.Tree: img = 'tree.svg'; break;
+      }
+      cells[info.cell] = img;
     });
     return cells;
   }

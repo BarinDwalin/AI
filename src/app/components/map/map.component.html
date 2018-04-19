@@ -20,7 +20,9 @@
       </div>
     </ng-template>
     <ng-template #longTermMemory>
-      <!--TODO -->
+      <div *ngFor="let img of longTermMemoryMap" class="cell"
+           [ngStyle]="{ 'backgroundImage': 'url(../../assets/' + img + ')' }">
+      </div>
     </ng-template>
   </ng-template>
 </div>
