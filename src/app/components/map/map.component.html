@@ -9,7 +9,7 @@
     </div>
   </ng-container>
   <ng-template #memory>
-    <div *ngIf="selectedHero; then shortTermMemory; else longTermMemory"></div>
+    <div *ngIf="memoryType === 'shortTerm'; then shortTermMemory; else longTermMemory"></div>
     <ng-template #shortTermMemory>
       <div *ngFor="let cell of shortTermMemoryMap" [ngSwitch]="getUpItemType(cell)"
            class="cell"

@@ -13,6 +13,7 @@ import { MapService } from '../../shared/services';
 })
 export class MapComponent implements OnInit, OnDestroy {
   @Input() game: Game;
+  @Input() memoryType: 'shortTerm' | 'longTerm';
 
   itemTypesEnum = ItemTypes;  // т.к. enum не поддерживается в шаблонах
   selectedHero: Hero;

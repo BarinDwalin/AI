@@ -37,17 +37,30 @@
 
 <ng-container *ngIf="isGameRunning">
   <div class="game-menu">
-    <div>Время хода <input type="number" [(ngModel)]="game.timeout">
+    <div>Время хода (мс) <input type="number" [(ngModel)]="game.timeout">
       <label *ngFor="let timeout of [100, 500, 1000]">
-        <input type="radio" name="timeout" [checked]="timeout === game.timeout" [value]="timeout" (click)="changeTimeout(timeout)">
+        <input type="radio" name="timeout" [value]="timeout" [checked]="timeout === game.timeout"
+               (click)="changeTimeout(timeout)">
         {{timeout}}
       </label>
     </div>
     <button *ngIf="!game.active" (click)="run()">Запустить</button>
     <button *ngIf="game.active" (click)="stop()">Остановить</button>
+    <div>Отображение памяти
+      <label>
+        <input type="radio" name="memory" value="shortTerm" [checked]="memoryType === 'shortTerm'"
+               (click)="changeMemoryType('shortTerm')">
+        краткосрочная
+      </label>
+      <label>
+        <input type="radio" name="memory" value="longTerm" [checked]="memoryType === 'longTerm'"
+               (click)="changeMemoryType('longTerm')">
+        долгосрочная
+      </label>
+    </div>
   </div>
 
-  <app-map style="float: left;" [game]="game"></app-map>
+  <app-map style="float: left;" [game]="game" [memoryType]="memoryType"></app-map>
   <app-statistic style="float: left; margin-left: 20px;"></app-statistic>
 </ng-container>
 

@@ -15,6 +15,7 @@ export class AppComponent implements OnInit {
   heroesThinkingRandomCount = 5;
   heroesThinkingSearchPathWithFullMapCount = 5;
   heroesThinkingSearchPathWithVisibilityCount = 5;
+  memoryType: 'shortTerm' | 'longTerm' = 'shortTerm';
 
   get isGameRunning() { return !!Game.map; }
 
@@ -34,6 +35,12 @@ export class AppComponent implements OnInit {
     );
     Game.map = Game.map;
     console.log(Game.map);
+  }
+
+  changeMemoryType(memoryType) {
+    if (this.memoryType !== memoryType) {
+      this.memoryType = memoryType;
+    }
   }
 
   changeTimeout(timeout) {
