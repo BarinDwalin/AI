@@ -6,12 +6,12 @@ import { ItemTypes } from './item-types';
 
 export class Memory {
   /** последние действия */
-  lastActions: { action: ActionTypes, args: any, result: void | ActionResult } [];
+  lastActions: { action: ActionTypes, args: any, result: void | ActionResult, round: number } [];
   /** краткосрочная память */
-  shortTerm: { cell: number, item: Item } [];
+  shortTerm: { cell: number, round: number, item: Item } [];
   /** долгосрочная память, какие типы объектов и где встречались
    * свалка всего, TODO: квадродерево*/
-  longTerm: { cell: number, item: ItemTypes } [];
+  longTerm: { cell: number, round: number, item: ItemTypes } [];
 
   private memorySize = {
     lastActions: 100,
@@ -26,13 +26,13 @@ export class Memory {
     this.memorySize = memorySize || this.memorySize;
   }
 
-  rememberLastAction(action: ActionTypes, args: any, result: void | ActionResult) {
+  rememberLastAction(action: ActionTypes, args: any, result: void | ActionResult, round: number) {
     if (this.lastActions.length > this.memorySize.lastActions) {
       this.lastActions.shift();
     }
-    this.lastActions.push({ action, args, result });
+    this.lastActions.push({ action, args, result, round });
   }
-  rememberItemsInCell(cell: number, items: Item[]) {
+  rememberItemsInCell(cell: number, items: Item[], round: number) {
     // удаляем старую информацию
     this.shortTerm.filter((info) => info.cell === cell).forEach((info) => {
       const index = this.shortTerm.indexOf(info);
@@ -51,19 +51,19 @@ export class Memory {
       if (this.longTerm.length >= this.memorySize.longTerm) {
         this.longTerm.shift();
       }
-      this.rememberItem(cell, item);
-      this.rememberTypeItem(cell, item.type);
+      this.rememberItem(cell, item, round);
+      this.rememberTypeItem(cell, item.type, round);
     });
   }
 
-  private rememberItem(cell: number, item: Item) {
+  private rememberItem(cell: number, item: Item, round: number) {
     if (this.shortTerm.length > this.memorySize.shortTerm) {
       this.shortTerm.shift();
     }
     const copy = Object.assign({}, item);
-    this.shortTerm.push({ cell, item: copy });
+    this.shortTerm.push({ cell, item: copy, round });
   }
-  private rememberTypeItem(cell: number, type: ItemTypes) {
+  private rememberTypeItem(cell: number, type: ItemTypes, round: number) {
     if (this.longTerm.some((item) => item.cell === cell && item.item === type)) {
       return;
     }
@@ -71,6 +71,6 @@ export class Memory {
       this.longTerm.shift();
       console.warn('Memory overload');
     }
-    this.longTerm.push({ cell, item: type });
+    this.longTerm.push({ cell, item: type, round });
   }
 }

@@ -43,7 +43,7 @@ export class Actions {
 
   static move(positions: {x: number, y: number}, hero: Hero) {
     if (hero instanceof Hero) {
-      Game.map.moveHero(positions, hero);
+      Game.map.moveHero(positions, hero, Game.round);
     } else {
       return new ActionResult(false);
     }

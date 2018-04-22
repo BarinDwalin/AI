@@ -31,7 +31,7 @@ export class Map {
     // все персонажи осматриваются
     this.cells.forEach((cell) => {
       cell.items.filter((item) => item.type === ItemTypes.Hero).forEach((item) => {
-        this.saveNearestObjects(cell.position, item as Hero);
+        this.saveNearestObjects(cell.position, item as Hero, 0);
       });
     });
   }
@@ -65,13 +65,13 @@ export class Map {
     return cells;
   }
 
-  moveHero(position: {x: number, y: number}, hero: Hero) {
+  moveHero(position: {x: number, y: number}, hero: Hero, round: number) {
     const newCell = this.getCell(position.x, position.y);
     const oldCell = this.getCell(hero.position.x, hero.position.y);
     const heroIndex = oldCell.items.findIndex((item) => item === hero);
 
     // осмотр мира
-    this.saveNearestObjects(position, hero);
+    this.saveNearestObjects(position, hero, round);
 
     oldCell.items.splice(heroIndex, 1);
     newCell.putInInventory(hero);
@@ -104,11 +104,16 @@ export class Map {
   private getCellIndex(x: number, y: number) {
     return y * this.width + x;
   }
-  private saveNearestObjects(position: {x: number, y: number}, hero: Hero) {
+  private saveNearestObjects(position: {x: number, y: number}, hero: Hero, round: number) {
     this.getCellsInArea(position.x, position.y, hero.visibilityDistance)
     .filter((cell) => cell.items.length !== 0)
     .forEach((cell) => {
-      hero.memory.rememberItemsInCell(this.getCellIndex(cell.position.x, cell.position.y), cell.items);
+      // исключаем информацию о себе
+      hero.memory.rememberItemsInCell(
+        this.getCellIndex(cell.position.x, cell.position.y),
+        cell.items.filter((item) => item !== hero),
+        round,
+      );
     });
   }
 }

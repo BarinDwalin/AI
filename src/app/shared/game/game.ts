@@ -4,6 +4,7 @@ import { Map } from './map';
 
 export class Game {
   static map: Map;
+  static round = 0;
 
   active = false;
   timeout = 100;
@@ -24,7 +25,7 @@ export class Game {
             const result = action.action(...todo.args);
 
             if (item.type === ItemTypes.Hero) {
-              (item as Hero).memory.rememberLastAction(todo.action, todo.args, result);
+              (item as Hero).memory.rememberLastAction(todo.action, todo.args, result, Game.round);
             }
           }
           // защита от повторного действия при перемещении по ячейкам
@@ -59,10 +60,10 @@ export class Game {
   }
 
   loop() {
-    let i = 0;
     const interval = setInterval(() => {
       if (this.active) {
-        console.log('loop', i++);
+        Game.round++;
+        console.log('loop', Game.round);
         this.events.forEach((event) => event());
       } else {
         clearInterval(interval);
