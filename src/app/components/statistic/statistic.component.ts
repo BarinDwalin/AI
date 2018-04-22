@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
+import { HeroFabric } from '../../shared/game/hero-fabric';
 import { Hero } from '../../shared/models';
 import { MapService } from '../../shared/services';
 
@@ -15,7 +16,7 @@ export class StatisticComponent implements OnInit {
   constructor(
     private mapService: MapService,
   ) {
-    this.heroes = Hero.heroes;
+    this.heroes = HeroFabric.heroes;
   }
 
   ngOnInit() {

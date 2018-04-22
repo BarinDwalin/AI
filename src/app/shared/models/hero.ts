@@ -1,16 +1,15 @@
 import { ActionTypes } from '../game/action-types';
 import { ActionResult } from '../game/action-result';
 
+import { Dream } from './dream';
+import { HeroStates } from './hero-states';
 import { Item } from './item';
 import { ItemTypes } from './item-types';
 import { Memory } from './memory';
 import { RenderSettings } from './render-settings';
 
-export class Hero extends Item {
-  static heroConter = 0;
-  /** все герои на карте */
-  static heroes: Hero[] = [];
 
+export class Hero extends Item {
   renderSettings: RenderSettings = {
     img: 'hero.svg',
     backgroundColor: 'white',
@@ -21,15 +20,26 @@ export class Hero extends Item {
   visibilityDistance: number;
 
   private actions: ActionTypes[] = [];
+  /** цель персонажа */
+  private dream: Dream;
+  /** общий уровень удовлетворенности, от -1 до 1*/
+  private contentment: number;
+  /** набор текущих состояний, положительно/отрицательно влияющих на персонажа, от -1 до 1 */
+  private states: { state: HeroStates, value: number }[];
 
+  get currentContentment() { return this.contentment; }
+  get currentStates() { return this.states; }
   get position() { return this.parent.position; }
 
-  constructor(name: string, description: string, settings?: RenderSettings) {
+  constructor(name: string, description: string, dream: Dream, settings?: RenderSettings) {
     super(name, ItemTypes.Hero);
+    this.dream = dream;
     this.description = description;
     this.actions = [ActionTypes.Move, ActionTypes.PickFruits];
     this.visibilityDistance = 3;
     this.memory = new Memory();
+    this.states = [{ state: HeroStates.Greed, value: 0 }];
+    this.checkContentment();
 
     if (settings) {
       this.renderSettings.img = settings.img || this.renderSettings.img;
@@ -37,31 +47,23 @@ export class Hero extends Item {
     }
   }
 
-  static createHero(ii: ActionTypes): Hero {
-    let type: string;
-    let color: string;
-    let description: string;
-    switch (ii) {
-      case ActionTypes.ThinkingRandom: type = 'random'; color = 'green';
-        description = 'Случайно перемещается по соседним клеткам. Если находит дерево, берет 1 яблоко и перемещается.';
-        break;
-      case ActionTypes.ThinkingSearchPathWithFullMap: type = 'search'; color = 'red';
-        description = 'Перемещается к ближайшему дереву с яблоками. Берет все что есть и ищет новое.';
-        break;
-      case ActionTypes.ThinkingSearchPathWithVisibility: type = 'searchRadius'; color = 'orange';
-        description = `Перемещается к ближайшему дереву с яблоками (в радиусе видимости 3 клеток).
-          Берет все что есть и ищет новое. Если не найдено, случайно перемещается по соседним клеткам.`;
-        break;
-    }
-    const name = `${this.heroConter++} ${type}`;
-    const renderSettings: RenderSettings = new RenderSettings();
-    renderSettings.backgroundColor = color;
-    const hero = new Hero(name, description, renderSettings);
+  refreshState() {
+    this.checkStates();
+    this.checkContentment();
+  }
 
-    const firstAction = { action: ii, args: [hero] };
-    hero.todoStack.push(firstAction);
-
-    this.heroes.push(hero);
-    return hero;
+  private checkContentment() {
+    this.contentment = this.states.map((state) => state.value)
+    .reduce((previous, current) => previous + current) / this.states.length;
+  }
+  private checkStates() {
+    this.states.forEach((state) => {
+      switch (state.state) {
+        case HeroStates.Greed:
+          const foodCount = this.inventory.filter((item) => item.type === ItemTypes.Food).length;
+          state.value = foodCount >= this.dream.foodCount ? 1 : foodCount / this.dream.foodCount;
+        break;
+      }
+    });
   }
 }

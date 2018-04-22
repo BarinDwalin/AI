@@ -16,6 +16,13 @@ export class Game {
     this.addEvent(() => {
       Game.map.cells.forEach((cell) => {
         cell.items.filter((item) => !item.activated && item.todoStack.length !== 0).forEach((item) => {
+          if (item.type === ItemTypes.Hero) {
+            (item as Hero).refreshState();
+            if ((item as Hero).currentContentment === 1) {
+              // бездействие при достижении цели
+              return;
+            }
+          }
           // за 1 ход выполняем у каждого объекта действия на определенную стоимость
           let currentCost = 0;
           while (currentCost < this.actionPoint) {

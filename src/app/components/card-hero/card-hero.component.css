@@ -11,5 +11,5 @@ img {
 .card__hero {
   display: grid;
   grid-row-gap: 5px;
-  grid-template-columns: 100px 1fr;
+  grid-template-columns: 150px 1fr;
 }

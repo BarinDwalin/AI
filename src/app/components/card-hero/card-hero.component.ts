@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 
-import { Hero } from '../../shared/models';
+import { Hero, getHeroStateName } from '../../shared/models';
 
 @Component({
   selector: 'app-card-hero',
@@ -9,6 +9,8 @@ import { Hero } from '../../shared/models';
 })
 export class CardHeroComponent implements OnInit {
   @Input() hero: Hero;
+
+  stateName = getHeroStateName;
 
   constructor() { }
 

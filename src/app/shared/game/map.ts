@@ -1,6 +1,7 @@
 import * as math from './math';
 
 import { Cell, Hero, Item, ItemTypes } from '../models';
+import { HeroFabric } from './hero-fabric';
 import { ItemFabric } from './item-fabric';
 import { ActionTypes } from './action-types';
 
@@ -90,15 +91,15 @@ export class Map {
     }
     for (let i = 0; i < heroesThinkingRandomCount; i++) {
       const index = math.randomIntFromInterval(0, 99);
-      this.cells[index].addObject(Hero.createHero(ActionTypes.ThinkingRandom));
+      this.cells[index].addObject(HeroFabric.createHero(ActionTypes.ThinkingRandom));
     }
     for (let i = 0; i < heroesThinkingSearchPathWithFullMapCount; i++) {
       const index = math.randomIntFromInterval(0, 99);
-      this.cells[index].addObject(Hero.createHero(ActionTypes.ThinkingSearchPathWithFullMap));
+      this.cells[index].addObject(HeroFabric.createHero(ActionTypes.ThinkingSearchPathWithFullMap));
     }
     for (let i = 0; i < heroesThinkingSearchPathWithVisibilityCount; i++) {
       const index = math.randomIntFromInterval(0, 99);
-      this.cells[index].addObject(Hero.createHero(ActionTypes.ThinkingSearchPathWithVisibility));
+      this.cells[index].addObject(HeroFabric.createHero(ActionTypes.ThinkingSearchPathWithVisibility));
     }
   }
   private getCellIndex(x: number, y: number) {
