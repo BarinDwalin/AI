@@ -11,7 +11,10 @@ export class HeroFabric {
     let color: string;
     let description: string;
     switch (ii) {
-      case ActionTypes.ThinkingRandom: type = 'random'; color = 'green';
+      case ActionTypes.ThinkingRandom: type = 'random'; color = 'coral';
+        description = 'Совершает случайные действия.';
+        break;
+      case ActionTypes.ThinkingPickAndRandomMove: type = 'rndMove'; color = 'green';
         description = 'Случайно перемещается по соседним клеткам. Если находит дерево, берет 1 яблоко и перемещается.';
         break;
       case ActionTypes.ThinkingSearchPathWithFullMap: type = 'search'; color = 'red';

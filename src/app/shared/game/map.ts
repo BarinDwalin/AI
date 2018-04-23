@@ -93,6 +93,10 @@ export class Map {
       const index = math.randomIntFromInterval(0, 99);
       this.cells[index].addObject(HeroFabric.createHero(ActionTypes.ThinkingRandom));
     }
+    for (let i = 0; i < heroesThinkingRandomCount; i++) {
+      const index = math.randomIntFromInterval(0, 99);
+      this.cells[index].addObject(HeroFabric.createHero(ActionTypes.ThinkingPickAndRandomMove));
+    }
     for (let i = 0; i < heroesThinkingSearchPathWithFullMapCount; i++) {
       const index = math.randomIntFromInterval(0, 99);
       this.cells[index].addObject(HeroFabric.createHero(ActionTypes.ThinkingSearchPathWithFullMap));

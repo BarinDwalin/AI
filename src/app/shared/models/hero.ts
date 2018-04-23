@@ -29,7 +29,7 @@ export class Hero extends Item {
 
   get currentContentment() { return this.contentment; }
   get currentStates() { return this.states; }
-  get position() { return this.parent.position; }
+  get position(): { x: number, y: number } { return this.parent.position; }
 
   constructor(name: string, description: string, dream: Dream, settings?: RenderSettings) {
     super(name, ItemTypes.Hero);

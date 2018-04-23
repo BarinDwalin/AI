@@ -14,7 +14,7 @@ export class Item {
   protected parent: Item;
   private _inventory: Item[] = [];
   get inventory() { return this._inventory; }
-  get position() { return this.parent.position; }
+  get position(): { x: number, y: number } { return this.parent.position; }
 
   constructor(name: string, type: ItemTypes) {
     this.name = name;

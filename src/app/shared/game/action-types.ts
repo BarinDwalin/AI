@@ -7,6 +7,7 @@ export enum ActionTypes {
   Waiting,
 
   ThinkingRandom,
+  ThinkingPickAndRandomMove,
   ThinkingSearchPathWithVisibility,
   ThinkingSearchPathWithFullMap,
 

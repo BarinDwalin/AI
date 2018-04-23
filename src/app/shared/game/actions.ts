@@ -11,6 +11,7 @@ export class Actions {
   static actionList: Action[] = [
     // интеллектуальные команды
     new Action(ActionTypes.ThinkingRandom, Actions.thinkingRandom, 0),
+    new Action(ActionTypes.ThinkingPickAndRandomMove, Actions.thinkingPickAndRandomMove, 0),
     new Action(ActionTypes.ThinkingSearchPathWithVisibility, Actions.thinkingSearchPathWithVisibility, 0),
     new Action(ActionTypes.ThinkingSearchPathWithFullMap, Actions.thinkingSearchPathWithFullMap, 0),
 
@@ -28,7 +29,7 @@ export class Actions {
   }
 
   //#region общие команды
-  static growing(tree: Item) {
+  static growing(tree: Item): ActionResult {
     // пропускаем 10..15 шагов
     for (let i = 0; i < math.randomIntFromInterval(10, 15); i++) {
       tree.todoStack.push({ action: ActionTypes.Waiting });
@@ -36,9 +37,11 @@ export class Actions {
     tree.todoStack.push({ action: ActionTypes.GrowingApple, args: [tree] });
     // бесконечное производство
     tree.todoStack.push({ action: ActionTypes.Growing, args: [tree] });
+    return new ActionResult(true);
   }
-  static growingApple(tree: Item) {
+  static growingApple(tree: Item): ActionResult {
     tree.putInInventory(ItemFabric.createApple());
+    return new ActionResult(true);
   }
 
   static move(positions: {x: number, y: number}, hero: Hero) {
@@ -48,7 +51,7 @@ export class Actions {
       return new ActionResult(false);
     }
   }
-  static moveRandomDirection(hero: Hero) {
+  static moveRandomDirection(hero: Hero): ActionResult {
     const direction = math.randomIntFromInterval(0, 3);
     let x = hero.position.x;
     let y = hero.position.y;
@@ -90,22 +93,29 @@ export class Actions {
       }
     }
     hero.todoStack.unshift({ action: ActionTypes.Move, args: [{ x, y }, hero] });
+    return new ActionResult(true);
   }
 
-  static pickFruits(hero: Hero, tree: Item) {
-    if (tree.inventory.length > 0) {
+  static pickFruits(hero: Hero, tree: Item): ActionResult {
+    if (hero.type !== ItemTypes.Hero && tree.type !== ItemTypes.Tree) {
+      return new ActionResult(false);
+    }
+    if (hero.position.x === tree.position.x && hero.position.y === tree.position.y && tree.inventory.length > 0) {
       const apple = tree.inventory.pop();
       hero.putInInventory(apple);
+      return new ActionResult(true);
+    } else {
+      return new ActionResult(false);
     }
   }
 
-  static waiting() { }
+  static waiting(): ActionResult { return new ActionResult(true); }
   //#endregion
 
   //#region ИИ
 
   /** ИИ v0 */
-  static thinkingRandom(hero: Hero) {
+  static thinkingPickAndRandomMove(hero: Hero) {
     // пропускаем 0..3 шага
     /*for (let i = 0; i < math.randomIntFromInterval(0, 3); i++) {
       hero.todoStack.push({ action: ActionTypes.Waiting });
@@ -116,10 +126,10 @@ export class Actions {
       const tree = currentCell.items[indexTree];
       hero.todoStack.push({ action: ActionTypes.PickFruits, args: [hero, tree] });
       hero.todoStack.push({ action: ActionTypes.MoveRandomDirection, args: [hero] });
-      hero.todoStack.push({ action: ActionTypes.ThinkingRandom, args: [hero] });
+      hero.todoStack.push({ action: ActionTypes.ThinkingPickAndRandomMove, args: [hero] });
     } else {
       hero.todoStack.push({ action: ActionTypes.MoveRandomDirection, args: [hero] });
-      hero.todoStack.push({ action: ActionTypes.ThinkingRandom, args: [hero] });
+      hero.todoStack.push({ action: ActionTypes.ThinkingPickAndRandomMove, args: [hero] });
     }
   }
   /** ИИ v1 */
@@ -198,6 +208,26 @@ export class Actions {
     }
     // повтор
     hero.todoStack.push({ action: ActionTypes.ThinkingSearchPathWithVisibility, args: [hero] });
+  }
+  /** ИИ v3 */
+  static thinkingRandom(hero: Hero) {
+    const availableActions = [
+      ActionTypes.MoveRandomDirection,
+      ActionTypes.PickFruits,
+      ActionTypes.Waiting,
+    ];
+    let random = math.randomIntFromInterval(0, availableActions.length - 1);
+    const randomAction = availableActions[random];
+
+    // все ближайшие объекты, включая себя
+    const nearestItems: Item[] = [];
+    Game.map.getCellsInArea(hero.position.x, hero.position.y, hero.visibilityDistance).forEach((cell) => {
+      nearestItems.push(...cell.items);
+    });
+    random = math.randomIntFromInterval(0, nearestItems.length - 1);
+    const randomItem = nearestItems[random];
+    hero.todoStack.push({ action: ActionTypes.ThinkingRandom, args: [hero] });
+    hero.todoStack.push({ action: randomAction, args: [hero, randomItem] });
   }
 
   //#endregion
