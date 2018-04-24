@@ -21,14 +21,9 @@ export class Map {
 
   constructor(
     treesCount: number,
-    heroesThinkingRandomCount: number,
-    heroesThinkingSearchPathWithFullMapCount: number,
-    heroesThinkingSearchPathWithVisibilityCount: number,
+    heroesCount: { [key: string]: number },
   ) {
-    this.createMap(
-      treesCount,
-      heroesThinkingRandomCount, heroesThinkingSearchPathWithFullMapCount, heroesThinkingSearchPathWithVisibilityCount,
-    );
+    this.createMap(treesCount, heroesCount);
     // все персонажи осматриваются
     this.cells.forEach((cell) => {
       cell.items.filter((item) => item.type === ItemTypes.Hero).forEach((item) => {
@@ -80,28 +75,26 @@ export class Map {
 
   private createMap(
     treesCount: number,
-    heroesThinkingRandomCount: number,
-    heroesThinkingSearchPathWithFullMapCount: number,
-    heroesThinkingSearchPathWithVisibilityCount: number,
+    heroesCount: { [key: string]: number },
   ) {
     this.cells = Map.createEmptyMap(this.size, this.width);
     for (let i = 0; i < treesCount; i++) {
       const index = math.randomIntFromInterval(0, 99);
       this.cells[index].addObject(ItemFabric.createTree());
     }
-    for (let i = 0; i < heroesThinkingRandomCount; i++) {
+    for (let i = 0; i < heroesCount.thinkingRandom; i++) {
       const index = math.randomIntFromInterval(0, 99);
       this.cells[index].addObject(HeroFabric.createHero(ActionTypes.ThinkingRandom));
     }
-    for (let i = 0; i < heroesThinkingRandomCount; i++) {
+    for (let i = 0; i < heroesCount.thinkingPickAndRandomMove; i++) {
       const index = math.randomIntFromInterval(0, 99);
       this.cells[index].addObject(HeroFabric.createHero(ActionTypes.ThinkingPickAndRandomMove));
     }
-    for (let i = 0; i < heroesThinkingSearchPathWithFullMapCount; i++) {
+    for (let i = 0; i < heroesCount.thinkingSearchPathWithFullMap; i++) {
       const index = math.randomIntFromInterval(0, 99);
       this.cells[index].addObject(HeroFabric.createHero(ActionTypes.ThinkingSearchPathWithFullMap));
     }
-    for (let i = 0; i < heroesThinkingSearchPathWithVisibilityCount; i++) {
+    for (let i = 0; i < heroesCount.thinkingSearchPathWithVisibility; i++) {
       const index = math.randomIntFromInterval(0, 99);
       this.cells[index].addObject(HeroFabric.createHero(ActionTypes.ThinkingSearchPathWithVisibility));
     }

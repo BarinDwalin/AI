@@ -12,9 +12,12 @@ export class AppComponent implements OnInit {
   game: Game;
   // настройки карты
   treesCount = 10;
-  heroesThinkingRandomCount = 5;
-  heroesThinkingSearchPathWithFullMapCount = 5;
-  heroesThinkingSearchPathWithVisibilityCount = 5;
+  heroesCount = {
+    thinkingRandom: 5,
+    thinkingPickAndRandomMove: 5,
+    thinkingSearchPathWithFullMap: 5,
+    thinkingSearchPathWithVisibility: 5,
+  };
   memoryType: 'shortTerm' | 'longTerm' = 'shortTerm';
 
   get isGameRunning() { return !!Game.map; }
@@ -29,9 +32,7 @@ export class AppComponent implements OnInit {
   createGame() {
     this.game.createMap(
       this.treesCount,
-      this.heroesThinkingRandomCount,
-      this.heroesThinkingSearchPathWithFullMapCount,
-      this.heroesThinkingSearchPathWithVisibilityCount,
+      this.heroesCount,
     );
     Game.map = Game.map;
     console.log(Game.map);
@@ -62,23 +63,9 @@ export class AppComponent implements OnInit {
     this.treesCount--;
   }
   addHero(hero: string) {
-    switch (hero) {
-      case 'ThinkingRandom': this.heroesThinkingRandomCount += 1;
-      break;
-      case 'ThinkingSearchPathWithFullMap': this.heroesThinkingSearchPathWithFullMapCount += 1;
-      break;
-      case 'ThinkingSearchPathWithVisibility': this.heroesThinkingSearchPathWithVisibilityCount += 1;
-      break;
-    }
+    this.heroesCount[hero]++;
   }
   removeHero(hero: string) {
-    switch (hero) {
-      case 'ThinkingRandom': this.heroesThinkingRandomCount -= 1;
-      break;
-      case 'ThinkingSearchPathWithFullMap': this.heroesThinkingSearchPathWithFullMapCount -= 1;
-      break;
-      case 'ThinkingSearchPathWithVisibility': this.heroesThinkingSearchPathWithVisibilityCount -= 1;
-      break;
-    }
+    this.heroesCount[hero]--;
   }
 }

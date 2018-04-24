@@ -43,16 +43,8 @@ export class Game {
     });
   }
 
-  createMap(
-    treesCount: number,
-    heroesThinkingRandomCount: number,
-    heroesThinkingSearchPathWithFullMapCount: number,
-    heroesThinkingSearchPathWithVisibilityCount: number,
-  ) {
-    Game.map = new Map(
-      treesCount,
-      heroesThinkingRandomCount, heroesThinkingSearchPathWithFullMapCount, heroesThinkingSearchPathWithVisibilityCount,
-    );
+  createMap(treesCount: number, heroesCount: { [key: string]: number }) {
+    Game.map = new Map(treesCount, heroesCount);
   }
 
   run() {
