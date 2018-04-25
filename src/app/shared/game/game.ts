@@ -43,8 +43,8 @@ export class Game {
     });
   }
 
-  createMap(treesCount: number, heroesCount: { [key: string]: number }) {
-    Game.map = new Map(treesCount, heroesCount);
+  createMap(mapSize: number, treesCount: number, heroesCount: { [key: string]: number }) {
+    Game.map = new Map(mapSize, treesCount, heroesCount);
   }
 
   run() {

@@ -7,6 +7,12 @@
 
 <div *ngIf="!isGameRunning" class="new-game-menu">
   <div class="counter">
+    <div>Размер карты</div>
+    <input type="number" [(ngModel)]="mapSize">
+    <button (click)="increaseMapSize()">+</button>
+    <button (click)="decreaseMapSize()">-</button>
+  </div>
+  <div class="counter">
     <div>Деревьев</div>
     <input type="number" [(ngModel)]="treesCount">
     <button (click)="addTree()">+</button>

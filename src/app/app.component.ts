@@ -11,6 +11,7 @@ export class AppComponent implements OnInit {
   title = 'Собиратели яблок';
   game: Game;
   // настройки карты
+  mapSize = 10;
   treesCount = 10;
   heroesCount = {
     thinkingRandom: 5,
@@ -31,6 +32,7 @@ export class AppComponent implements OnInit {
 
   createGame() {
     this.game.createMap(
+      this.mapSize,
       this.treesCount,
       this.heroesCount,
     );
@@ -56,6 +58,12 @@ export class AppComponent implements OnInit {
     this.game.stop();
   }
 
+  increaseMapSize() {
+    this.mapSize++;
+  }
+  decreaseMapSize() {
+    this.mapSize--;
+  }
   addTree() {
     this.treesCount++;
   }

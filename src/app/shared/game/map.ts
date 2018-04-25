@@ -7,9 +7,9 @@ import { ActionTypes } from './action-types';
 
 export class Map {
   cells: Cell[] = [];
-  width = 10;
-  height = 10;
-  size = this.width * this.height;
+  width: number;
+  height: number;
+  size: number;
 
   get bounds() { return {
       minX: 0,
@@ -20,9 +20,14 @@ export class Map {
   }
 
   constructor(
+    mapSize: number,
     treesCount: number,
     heroesCount: { [key: string]: number },
   ) {
+    this.width = mapSize;
+    this.height = mapSize;
+    this.size = this.width * this.height;
+
     this.createMap(treesCount, heroesCount);
     // все персонажи осматриваются
     this.cells.forEach((cell) => {
@@ -79,23 +84,23 @@ export class Map {
   ) {
     this.cells = Map.createEmptyMap(this.size, this.width);
     for (let i = 0; i < treesCount; i++) {
-      const index = math.randomIntFromInterval(0, 99);
+      const index = math.randomIntFromInterval(0, this.size - 1);
       this.cells[index].addObject(ItemFabric.createTree());
     }
     for (let i = 0; i < heroesCount.thinkingRandom; i++) {
-      const index = math.randomIntFromInterval(0, 99);
+      const index = math.randomIntFromInterval(0, this.size - 1);
       this.cells[index].addObject(HeroFabric.createHero(ActionTypes.ThinkingRandom));
     }
     for (let i = 0; i < heroesCount.thinkingPickAndRandomMove; i++) {
-      const index = math.randomIntFromInterval(0, 99);
+      const index = math.randomIntFromInterval(0, this.size - 1);
       this.cells[index].addObject(HeroFabric.createHero(ActionTypes.ThinkingPickAndRandomMove));
     }
     for (let i = 0; i < heroesCount.thinkingSearchPathWithFullMap; i++) {
-      const index = math.randomIntFromInterval(0, 99);
+      const index = math.randomIntFromInterval(0, this.size - 1);
       this.cells[index].addObject(HeroFabric.createHero(ActionTypes.ThinkingSearchPathWithFullMap));
     }
     for (let i = 0; i < heroesCount.thinkingSearchPathWithVisibility; i++) {
-      const index = math.randomIntFromInterval(0, 99);
+      const index = math.randomIntFromInterval(0, this.size - 1);
       this.cells[index].addObject(HeroFabric.createHero(ActionTypes.ThinkingSearchPathWithVisibility));
     }
   }
