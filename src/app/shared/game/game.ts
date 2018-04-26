@@ -1,6 +1,7 @@
 import { Cell, Hero, ItemTypes, Item } from '../models';
 import { Actions } from './actions';
 import { Map } from './map';
+import { MapSettings } from './map-settings';
 
 export class Game {
   static map: Map;
@@ -43,8 +44,8 @@ export class Game {
     });
   }
 
-  createMap(mapSize: number, treesCount: number, heroesCount: { [key: string]: number }) {
-    Game.map = new Map(mapSize, treesCount, heroesCount);
+  createMap(settings: MapSettings) {
+    Game.map = new Map(settings);
   }
 
   run() {

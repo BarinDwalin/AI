@@ -1,0 +1,23 @@
+<div class="game-menu">
+  <div>Время хода (мс) <input type="number" [(ngModel)]="game.timeout">
+    <label *ngFor="let timeout of [100, 500, 1000]">
+      <input type="radio" name="timeout" [value]="timeout" [checked]="timeout === game.timeout"
+              (click)="changeTimeout(timeout)">
+      {{timeout}}
+    </label>
+  </div>
+  <button *ngIf="!game.active" (click)="run()">Запустить</button>
+  <button *ngIf="game.active" (click)="stop()">Остановить</button>
+  <div>Отображение памяти
+    <label>
+      <input type="radio" name="memory" value="shortTerm" [checked]="memoryType === 'shortTerm'"
+              (click)="changeMemoryType('shortTerm')">
+      краткосрочная
+    </label>
+    <label>
+      <input type="radio" name="memory" value="longTerm" [checked]="memoryType === 'longTerm'"
+              (click)="changeMemoryType('longTerm')">
+      долгосрочная
+    </label>
+  </div>
+</div>

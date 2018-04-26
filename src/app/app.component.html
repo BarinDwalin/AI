@@ -5,72 +5,10 @@
   </h1>
 </div>
 
-<div *ngIf="!isGameRunning" class="new-game-menu">
-  <div class="counter">
-    <div>Размер карты</div>
-    <input type="number" [(ngModel)]="mapSize">
-    <button (click)="increaseMapSize()">+</button>
-    <button (click)="decreaseMapSize()">-</button>
-  </div>
-  <div class="counter">
-    <div>Деревьев</div>
-    <input type="number" [(ngModel)]="treesCount">
-    <button (click)="addTree()">+</button>
-    <button (click)="removeTree()">-</button>
-  </div>
-  <div class="counter">
-    <div>Героев класса 1</div>
-    <input type="number" [(ngModel)]="heroesCount.thinkingRandom">
-    <button (click)="addHero('thinkingRandom')">+</button>
-    <button (click)="removeHero('thinkingRandom')">-</button>
-  </div>
-  <div class="counter">
-    <div>Героев класса 2</div>
-    <input type="number" [(ngModel)]="heroesCount.thinkingSearchPathWithFullMap">
-    <button (click)="addHero('thinkingSearchPathWithFullMap')">+</button>
-    <button (click)="removeHero('thinkingSearchPathWithFullMap')">-</button>
-  </div>
-  <div class="counter">
-    <div>Героев класса 3</div>
-    <input type="number" [(ngModel)]="heroesCount.thinkingSearchPathWithVisibility">
-    <button (click)="addHero('thinkingSearchPathWithVisibility')">+</button>
-    <button (click)="removeHero('thinkingSearchPathWithVisibility')">-</button>
-  </div>
-  <div class="counter">
-    <div>Героев класса 4</div>
-    <input type="number" [(ngModel)]="heroesCount.thinkingSearchPathWithVisibility">
-    <button (click)="addHero('thinkingSearchPathWithVisibility')">+</button>
-    <button (click)="removeHero('thinkingSearchPathWithVisibility')">-</button>
-  </div>
-  <div class="new-game">
-    <button (click)="createGame()">Создать игру</button>
-  </div>
-</div>
+<app-map-settings *ngIf="!isGameRunning" (createGame)="createGame($event)"></app-map-settings>
 
 <ng-container *ngIf="isGameRunning">
-  <div class="game-menu">
-    <div>Время хода (мс) <input type="number" [(ngModel)]="game.timeout">
-      <label *ngFor="let timeout of [100, 500, 1000]">
-        <input type="radio" name="timeout" [value]="timeout" [checked]="timeout === game.timeout"
-               (click)="changeTimeout(timeout)">
-        {{timeout}}
-      </label>
-    </div>
-    <button *ngIf="!game.active" (click)="run()">Запустить</button>
-    <button *ngIf="game.active" (click)="stop()">Остановить</button>
-    <div>Отображение памяти
-      <label>
-        <input type="radio" name="memory" value="shortTerm" [checked]="memoryType === 'shortTerm'"
-               (click)="changeMemoryType('shortTerm')">
-        краткосрочная
-      </label>
-      <label>
-        <input type="radio" name="memory" value="longTerm" [checked]="memoryType === 'longTerm'"
-               (click)="changeMemoryType('longTerm')">
-        долгосрочная
-      </label>
-    </div>
-  </div>
+  <app-game-menu [game]="game"></app-game-menu>
 
   <app-map style="float: left;" [game]="game" [memoryType]="memoryType"></app-map>
   <app-statistic style="float: left; margin-left: 20px;"></app-statistic>

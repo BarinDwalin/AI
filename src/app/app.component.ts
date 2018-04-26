@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Game } from './shared/game';
+import { Game, MapSettings } from './shared/game';
 
 @Component({
   selector: 'app-root',
@@ -10,16 +10,6 @@ import { Game } from './shared/game';
 export class AppComponent implements OnInit {
   title = 'Собиратели яблок';
   game: Game;
-  // настройки карты
-  mapSize = 10;
-  treesCount = 10;
-  heroesCount = {
-    thinkingRandom: 5,
-    thinkingPickAndRandomMove: 5,
-    thinkingSearchPathWithFullMap: 5,
-    thinkingSearchPathWithVisibility: 5,
-  };
-  memoryType: 'shortTerm' | 'longTerm' = 'shortTerm';
 
   get isGameRunning() { return !!Game.map; }
 
@@ -30,50 +20,8 @@ export class AppComponent implements OnInit {
   ngOnInit() {
   }
 
-  createGame() {
-    this.game.createMap(
-      this.mapSize,
-      this.treesCount,
-      this.heroesCount,
-    );
-    Game.map = Game.map;
+  createGame(mapSettings: MapSettings) {
+    this.game.createMap(mapSettings);
     console.log(Game.map);
-  }
-
-  changeMemoryType(memoryType) {
-    if (this.memoryType !== memoryType) {
-      this.memoryType = memoryType;
-    }
-  }
-
-  changeTimeout(timeout) {
-    this.game.timeout = timeout;
-  }
-
-  run() {
-    this.game.run();
-  }
-
-  stop() {
-    this.game.stop();
-  }
-
-  increaseMapSize() {
-    this.mapSize++;
-  }
-  decreaseMapSize() {
-    this.mapSize--;
-  }
-  addTree() {
-    this.treesCount++;
-  }
-  removeTree() {
-    this.treesCount--;
-  }
-  addHero(hero: string) {
-    this.heroesCount[hero]++;
-  }
-  removeHero(hero: string) {
-    this.heroesCount[hero]--;
   }
 }

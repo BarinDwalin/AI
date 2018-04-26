@@ -1,0 +1,42 @@
+<div class="new-game-menu">
+  <div class="counter">
+    <div>Размер карты</div>
+    <input type="number" [(ngModel)]="settings.mapSize">
+    <button (click)="increaseMapSize()">+</button>
+    <button (click)="decreaseMapSize()">-</button>
+  </div>
+  <div class="counter">
+    <div>Деревьев</div>
+    <input type="number" [(ngModel)]="settings.treesCount">
+    <button (click)="addTree()">+</button>
+    <button (click)="removeTree()">-</button>
+  </div>
+  <div class="counter">
+    <div>Героев класса 1</div>
+    <input type="number" [(ngModel)]="settings.heroesCount.thinkingRandom">
+    <button (click)="addHero('thinkingRandom')">+</button>
+    <button (click)="removeHero('thinkingRandom')">-</button>
+  </div>
+  <div class="counter">
+    <div>Героев класса 2</div>
+    <input type="number" [(ngModel)]="settings.heroesCount.thinkingSearchPathWithFullMap">
+    <button (click)="addHero('thinkingSearchPathWithFullMap')">+</button>
+    <button (click)="removeHero('thinkingSearchPathWithFullMap')">-</button>
+  </div>
+  <div class="counter">
+    <div>Героев класса 3</div>
+    <input type="number" [(ngModel)]="settings.heroesCount.thinkingSearchPathWithVisibility">
+    <button (click)="addHero('thinkingSearchPathWithVisibility')">+</button>
+    <button (click)="removeHero('thinkingSearchPathWithVisibility')">-</button>
+  </div>
+  <div class="counter">
+    <div>Героев класса 4</div>
+    <input type="number" [(ngModel)]="settings.heroesCount.thinkingSearchPathWithVisibility">
+    <button (click)="addHero('thinkingSearchPathWithVisibility')">+</button>
+    <button (click)="removeHero('thinkingSearchPathWithVisibility')">-</button>
+  </div>
+
+  <div class="new-game">
+    <button (click)="newGame()">Создать игру</button>
+  </div>
+</div>

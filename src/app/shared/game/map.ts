@@ -1,9 +1,10 @@
 import * as math from './math';
 
 import { Cell, Hero, Item, ItemTypes } from '../models';
+import { ActionTypes } from './action-types';
 import { HeroFabric } from './hero-fabric';
 import { ItemFabric } from './item-fabric';
-import { ActionTypes } from './action-types';
+import { MapSettings } from './map-settings';
 
 export class Map {
   cells: Cell[] = [];
@@ -19,16 +20,12 @@ export class Map {
     };
   }
 
-  constructor(
-    mapSize: number,
-    treesCount: number,
-    heroesCount: { [key: string]: number },
-  ) {
-    this.width = mapSize;
-    this.height = mapSize;
+  constructor(settings: MapSettings) {
+    this.width = settings.mapSize;
+    this.height = settings.mapSize;
     this.size = this.width * this.height;
 
-    this.createMap(treesCount, heroesCount);
+    this.createMap(settings.treesCount, settings.heroesCount);
     // все персонажи осматриваются
     this.cells.forEach((cell) => {
       cell.items.filter((item) => item.type === ItemTypes.Hero).forEach((item) => {
