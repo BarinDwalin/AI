@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 
+import { MapService } from '../../shared/services';
+
 @Component({
   selector: 'app-game-menu',
   templateUrl: './game-menu.component.html',
@@ -9,7 +11,11 @@ export class GameMenuComponent implements OnInit {
   @Input() game;
   memoryType: 'shortTerm' | 'longTerm' = 'shortTerm';
 
-  constructor() { }
+  constructor(
+    private mapService: MapService,
+  ) {
+    this.mapService.setMemoryType(this.memoryType);
+  }
 
   ngOnInit() {
   }
@@ -17,6 +23,7 @@ export class GameMenuComponent implements OnInit {
   changeMemoryType(memoryType) {
     if (this.memoryType !== memoryType) {
       this.memoryType = memoryType;
+      this.mapService.setMemoryType(memoryType);
     }
   }
 

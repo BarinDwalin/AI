@@ -13,9 +13,9 @@ import { MapService } from '../../shared/services';
 })
 export class MapComponent implements OnInit, OnDestroy {
   @Input() game: Game;
-  @Input() memoryType: 'shortTerm' | 'longTerm';
 
   itemTypesEnum = ItemTypes; // т.к. enum не поддерживается в шаблонах
+  memoryType: 'shortTerm' | 'longTerm';
   selectedHero: Hero;
 
   private subscriptions: Subscription[] = [];
@@ -51,6 +51,9 @@ export class MapComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.subscriptions.push(this.mapService.memoryType$.subscribe((memoryType) => {
+      this.memoryType = memoryType;
+    }));
     this.subscriptions.push(this.mapService.selectedHero$.subscribe((hero) => {
       this.selectedHero = hero;
     }));
