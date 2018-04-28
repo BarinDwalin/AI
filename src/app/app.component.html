@@ -1,18 +1,17 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
+<header>
   <h1>
     {{ title }}
   </h1>
-</div>
+</header>
 
 <app-map-settings *ngIf="!isGameRunning" (createGame)="createGame($event)"></app-map-settings>
 
-<ng-container *ngIf="isGameRunning">
-  <app-game-menu [game]="game"></app-game-menu>
+<div *ngIf="isGameRunning" class="page">
+  <app-game-menu [game]="game" class="header"></app-game-menu>
 
-  <app-map style="float: left;" [game]="game"></app-map>
-  <app-statistic style="float: left; margin-left: 20px;"></app-statistic>
-</ng-container>
+  <app-map [game]="game"></app-map>
+  <app-statistic></app-statistic>
+</div>
 
 
 
