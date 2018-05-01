@@ -11,6 +11,9 @@ export class HeroFabric {
     let color: string;
     let description: string;
     switch (ii) {
+      case ActionTypes.ThinkingBestAction: type = 'best'; color = 'aquamarine';
+        description = '...';
+        break;
       case ActionTypes.ThinkingRandom: type = 'random'; color = 'coral';
         description = 'Совершает случайные действия.';
         break;

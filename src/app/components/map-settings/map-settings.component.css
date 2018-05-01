@@ -1,16 +1,28 @@
 .new-game-menu {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-  grid-template-rows: 50px 1fr;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: 50px 50px 50px 1fr;
   width: fit-content;
   grid-column-gap: 20px;
   border: solid gray 1px;
   margin-bottom: 20px;
 }
 
+.counter.map {
+  grid-column-end: span 5;
+}
+.counter.trees {
+  grid-column-end: span 5;
+}
+.counter input {
+  width: 30px;
+}
+.counter button {
+  width: 30px;
+}
 .new-game {
   grid-column-start: 1;
-  grid-column-end:   5;
+  grid-column-end:   6;
   text-align: center;
 }
 .new-game button {
@@ -20,9 +32,3 @@
   color: white;
 }
 
-.counter input {
-  width: 30px;
-}
-.counter button {
-  width: 30px;
-}

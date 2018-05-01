@@ -84,6 +84,10 @@ export class Map {
       const index = math.randomIntFromInterval(0, this.size - 1);
       this.cells[index].addObject(ItemFabric.createTree());
     }
+    for (let i = 0; i < heroesCount.thinkingBestAction; i++) {
+      const index = math.randomIntFromInterval(0, this.size - 1);
+      this.cells[index].addObject(HeroFabric.createHero(ActionTypes.ThinkingBestAction));
+    }
     for (let i = 0; i < heroesCount.thinkingRandom; i++) {
       const index = math.randomIntFromInterval(0, this.size - 1);
       this.cells[index].addObject(HeroFabric.createHero(ActionTypes.ThinkingRandom));

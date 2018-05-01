@@ -1,11 +1,11 @@
 <div class="new-game-menu">
-  <div class="counter">
+  <div class="counter map">
     <div>Размер карты</div>
     <input type="number" [(ngModel)]="settings.mapSize">
     <button (click)="increaseMapSize()">+</button>
     <button (click)="decreaseMapSize()">-</button>
   </div>
-  <div class="counter">
+  <div class="counter trees">
     <div>Деревьев</div>
     <input type="number" [(ngModel)]="settings.treesCount">
     <button (click)="addTree()">+</button>
@@ -34,6 +34,12 @@
     <input type="number" [(ngModel)]="settings.heroesCount.thinkingSearchPathWithVisibility">
     <button (click)="addHero('thinkingSearchPathWithVisibility')">+</button>
     <button (click)="removeHero('thinkingSearchPathWithVisibility')">-</button>
+  </div>
+  <div class="counter">
+    <div>Героев класса 5</div>
+    <input type="number" [(ngModel)]="settings.heroesCount.thinkingBestAction">
+    <button (click)="addHero('thinkingBestAction')">+</button>
+    <button (click)="removeHero('thinkingBestAction')">-</button>
   </div>
 
   <div class="new-game">

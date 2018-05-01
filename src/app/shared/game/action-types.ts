@@ -6,9 +6,9 @@ export enum ActionTypes {
   PickFruits,
   Waiting,
 
+  ThinkingBestAction,
   ThinkingRandom,
   ThinkingPickAndRandomMove,
   ThinkingSearchPathWithVisibility,
   ThinkingSearchPathWithFullMap,
-
 }
