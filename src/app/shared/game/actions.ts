@@ -10,6 +10,7 @@ import { ActionResult } from './action-result';
 export class Actions {
   static actionList: Action[] = [
     // интеллектуальные команды
+    new Action(ActionTypes.ThinkingBestAction, Actions.thinkingBestAction, 0),
     new Action(ActionTypes.ThinkingRandom, Actions.thinkingRandom, 0),
     new Action(ActionTypes.ThinkingPickAndRandomMove, Actions.thinkingPickAndRandomMove, 0),
     new Action(ActionTypes.ThinkingSearchPathWithVisibility, Actions.thinkingSearchPathWithVisibility, 0),
@@ -22,6 +23,11 @@ export class Actions {
     new Action(ActionTypes.MoveRandomDirection, Actions.moveRandomDirection, 0),
     new Action(ActionTypes.PickFruits, Actions.pickFruits),
     new Action(ActionTypes.Waiting, Actions.waiting),
+  ];
+  // все действия связанные с перемещением
+  static movingActionList = [
+    ActionTypes.Move,
+    ActionTypes.MoveRandomDirection,
   ];
 
   static get(type: ActionTypes) {
@@ -226,8 +232,77 @@ export class Actions {
     });
     random = math.randomIntFromInterval(0, nearestItems.length - 1);
     const randomItem = nearestItems[random];
-    hero.todoStack.push({ action: ActionTypes.ThinkingRandom, args: [hero] });
     hero.todoStack.push({ action: randomAction, args: [hero, randomItem] });
+    hero.todoStack.push({ action: ActionTypes.ThinkingRandom, args: [hero] });
+  }
+  /** ИИ v4 */
+  static thinkingBestAction(hero: Hero, info: {
+    // прошлое успешное состояние во время последнего прохода по памяти
+    lastSuccessActionIndex: number,
+    // сколько успешных проходов по памяти совершено
+    countResearchAndRepeat: number,
+    // сколько ходов еще ждать до нового прохода по памяти (сбрасывается на число успешных проходов).
+    // используется для увеличения рандомизации с течением времени, иначе не выйдет из первого успешного состояния.
+    waitingResearchTurnCount: number,
+  } = { lastSuccessActionIndex: undefined, countResearchAndRepeat: 0, waitingResearchTurnCount: 0 }) {
+    const availableRandomActions = [
+      ActionTypes.MoveRandomDirection,
+      ActionTypes.PickFruits,
+      ActionTypes.Waiting,
+    ];
+    let success = true;
+
+    // ожидание нового прохода по памяти
+    if (info && info.waitingResearchTurnCount > 0) {
+      info.waitingResearchTurnCount--;
+      success = false;
+    } else {
+      // поиск в памяти хода, улучшающего состояние
+      // TODO: необходима память собственного состояния
+      info.lastSuccessActionIndex = !!info.lastSuccessActionIndex ? info.lastSuccessActionIndex - 1 : 5; // TODO: поиск по ходу
+      success = info.lastSuccessActionIndex > 1;
+      let position = { x: 5, y: 5 };
+
+      if (success) {
+        // перемещение до нужной точки
+        Actions.createPathToPoint(
+          hero.position.x, hero.position.y, position.x, position.y
+        ).forEach((step) => {
+          hero.todoStack.push({ action: ActionTypes.Move, args: [{ x: step.x, y: step.y }, hero] });
+        });
+        // поиск последовательности действий до этого состояния, остановившись на перемещении
+        for (let index = info.lastSuccessActionIndex; index >= 0; index--) {
+          const actionInfo = hero.memory.lastActions[index];
+          if (actionInfo && !Actions.movingActionList.includes(actionInfo.action)
+            && actionInfo.action !== ActionTypes.ThinkingBestAction
+          ) {
+            hero.todoStack.push({ action: actionInfo.action, args: actionInfo.args });
+          }
+        }
+        hero.todoStack.push({ action: ActionTypes.ThinkingBestAction, args: [hero, info] });
+        return;
+      }
+    }
+    if (!!info.lastSuccessActionIndex) {
+      info.countResearchAndRepeat += 1;
+      info.waitingResearchTurnCount = info.countResearchAndRepeat;
+    }
+    // сбрасываем для нового прохода по памяти
+    info.lastSuccessActionIndex = undefined;
+
+    // подходящего хода нет, совершается случайное действие
+    let random = math.randomIntFromInterval(0, availableRandomActions.length - 1);
+    const randomAction = availableRandomActions[random];
+
+    // все ближайшие объекты, включая себя
+    const nearestItems: Item[] = [];
+    Game.map.getCellsInArea(hero.position.x, hero.position.y, hero.visibilityDistance).forEach((cell) => {
+      nearestItems.push(...cell.items);
+    });
+    random = math.randomIntFromInterval(0, nearestItems.length - 1);
+    const randomItem = nearestItems[random];
+    hero.todoStack.push({ action: randomAction, args: [hero, randomItem] });
+    hero.todoStack.push({ action: ActionTypes.ThinkingBestAction, args: [hero, info] });
   }
 
   //#endregion

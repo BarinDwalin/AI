@@ -12,7 +12,8 @@ export class HeroFabric {
     let description: string;
     switch (ii) {
       case ActionTypes.ThinkingBestAction: type = 'best'; color = 'aquamarine';
-        description = '...';
+        description = `Если помнит действие, улучшающее свое состояние, делает его.
+          Если не может или не помнит, делает случайное.`;
         break;
       case ActionTypes.ThinkingRandom: type = 'random'; color = 'coral';
         description = 'Совершает случайные действия.';
