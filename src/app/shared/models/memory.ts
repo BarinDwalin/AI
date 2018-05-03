@@ -5,6 +5,8 @@ import { Item } from './item';
 import { ItemTypes } from './item-types';
 
 export class Memory {
+  /** общее состояние, TODO: хранить все изменения / все показатели состояния */
+  contentment: { value: number, round: number, isIncreased: boolean }[];
   /** последние действия */
   lastActions: { action: ActionTypes, args: any, result: void | ActionResult, round: number } [];
   /** краткосрочная память */
@@ -20,12 +22,23 @@ export class Memory {
   };
 
   constructor(memorySize?: { lastActions: number, shortTerm: number, longTerm: number }) {
+    this.contentment = [];
     this.lastActions = [];
     this.shortTerm = [];
     this.longTerm = [];
     this.memorySize = memorySize || this.memorySize;
   }
 
+  rememberContentment(value: number, round: number) {
+    if (this.contentment.length === 0) {
+      this.contentment.push({ value, round, isIncreased: false });
+    } else {
+      const lastValue = this.contentment[this.contentment.length - 1].value;
+      if (value !== lastValue) {
+        this.contentment.push({ value, round, isIncreased: (value > lastValue) });
+      }
+    }
+  }
   rememberLastAction(action: ActionTypes, args: any, result: void | ActionResult, round: number) {
     if (this.lastActions.length > this.memorySize.lastActions) {
       this.lastActions.shift();

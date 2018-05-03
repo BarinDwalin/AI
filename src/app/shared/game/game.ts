@@ -10,15 +10,15 @@ export class Game {
   active = false;
   timeout = 100;
 
-  private events: Array<() => void> = [];
+  private events: Array<(round: number) => void> = [];
   private actionPoint = 1;
 
   constructor() {
-    this.addEvent(() => {
+    this.addEvent((round) => {
       Game.map.cells.forEach((cell) => {
         cell.items.filter((item) => !item.activated && item.todoStack.length !== 0).forEach((item) => {
           if (item.type === ItemTypes.Hero) {
-            (item as Hero).refreshState();
+            (item as Hero).refreshState(round);
             if ((item as Hero).currentContentment === 1) {
               // бездействие при достижении цели
               return;
@@ -55,7 +55,7 @@ export class Game {
   stop() {
     this.active = false;
   }
-  addEvent(fn: () => void) {
+  addEvent(fn: (round: number) => void) {
     this.events.push(fn);
   }
 
@@ -64,7 +64,7 @@ export class Game {
       if (this.active) {
         Game.round++;
         console.log('loop', Game.round);
-        this.events.forEach((event) => event());
+        this.events.forEach((event) => event(Game.round));
       } else {
         clearInterval(interval);
       }
