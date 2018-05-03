@@ -6,7 +6,7 @@ import { ItemTypes } from './item-types';
 
 export class Memory {
   /** общее состояние, TODO: хранить все изменения / все показатели состояния */
-  contentment: { value: number, round: number, isIncreased: boolean }[];
+  contentment: { value: number, round: number, isIncreased: boolean, position: { x: number, y: number } }[];
   /** последние действия */
   lastActions: { action: ActionTypes, args: any, result: void | ActionResult, round: number } [];
   /** краткосрочная память */
@@ -29,13 +29,13 @@ export class Memory {
     this.memorySize = memorySize || this.memorySize;
   }
 
-  rememberContentment(value: number, round: number) {
+  rememberContentment(value: number, round: number, position: { x: number, y: number }) {
     if (this.contentment.length === 0) {
-      this.contentment.push({ value, round, isIncreased: false });
+      this.contentment.push({ value, round, position, isIncreased: false });
     } else {
       const lastValue = this.contentment[this.contentment.length - 1].value;
       if (value !== lastValue) {
-        this.contentment.push({ value, round, isIncreased: (value > lastValue) });
+        this.contentment.push({ value, round, position, isIncreased: (value > lastValue) });
       }
     }
   }
