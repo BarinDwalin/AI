@@ -73,8 +73,7 @@ export class Actions {
     }
     // защита от простоя
     if (x === hero.position.x && y === hero.position.y) {
-      Actions.moveRandomDirection(hero);
-      return;
+      return Actions.moveRandomDirection(hero);
     }
     // защита от возврата
     let currentMove;
@@ -94,8 +93,7 @@ export class Actions {
     const previousMove2 = hero.memory.reverse().find((action) => action.action === ActionTypes.Move && action !== currentMove);*/
     if (!!previousMove) {
       if (x === previousMove.args[0].x && y === previousMove.args[0].y) {
-        Actions.moveRandomDirection(hero);
-        return;
+        return Actions.moveRandomDirection(hero);
       }
     }
     hero.todoStack.unshift({ action: ActionTypes.Move, args: [{ x, y }, hero] });
@@ -250,18 +248,28 @@ export class Actions {
       ActionTypes.PickFruits,
       ActionTypes.Waiting,
     ];
-    let success = true;
+    let success = false;
+    let position: { x: number, y: number };
 
     // ожидание нового прохода по памяти
     if (info && info.waitingResearchTurnCount > 0) {
       info.waitingResearchTurnCount--;
-      success = false;
     } else {
       // поиск в памяти хода, улучшающего состояние
-      // TODO: необходима память собственного состояния
-      info.lastSuccessActionIndex = !!info.lastSuccessActionIndex ? info.lastSuccessActionIndex - 1 : 5; // TODO: поиск по ходу
-      success = info.lastSuccessActionIndex > 1;
-      let position = { x: 5, y: 5 };
+      for (let index = hero.memory.contentment.length - 1; index >= 0; index--) {
+        if (hero.memory.contentment[index].isIncreased) {
+          const round = hero.memory.contentment[index].round - 1; // берем ход до обновления состояния
+          position = hero.memory.contentment[index].position;
+          for (let actionIndex = hero.memory.lastActions.length - 1; actionIndex >= 0; actionIndex--) {
+            if (hero.memory.lastActions[actionIndex].round === round) {
+              info.lastSuccessActionIndex = actionIndex;
+              success = true;
+              break;
+            }
+          }
+          break;
+        }
+      }
 
       if (success) {
         // перемещение до нужной точки
