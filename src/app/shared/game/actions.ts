@@ -235,6 +235,9 @@ export class Actions {
   }
   /** ИИ v4 */
   static thinkingBestAction(hero: Hero, info: {
+    // прошлое улучшение состояния во время последнего прохода по памяти
+    // является ограничением для постоянного прохода по всей памяти
+    lastContentmentIndex: number,
     // прошлое успешное состояние во время последнего прохода по памяти
     lastSuccessActionIndex: number,
     // сколько успешных проходов по памяти совершено
@@ -242,7 +245,10 @@ export class Actions {
     // сколько ходов еще ждать до нового прохода по памяти (сбрасывается на число успешных проходов).
     // используется для увеличения рандомизации с течением времени, иначе не выйдет из первого успешного состояния.
     waitingResearchTurnCount: number,
-  } = { lastSuccessActionIndex: undefined, countResearchAndRepeat: 0, waitingResearchTurnCount: 0 }) {
+  } = {
+    lastContentmentIndex: undefined, lastSuccessActionIndex: undefined,
+    countResearchAndRepeat: 0, waitingResearchTurnCount: 0
+  }) {
     const availableRandomActions = [
       ActionTypes.MoveRandomDirection,
       ActionTypes.PickFruits,
@@ -256,12 +262,13 @@ export class Actions {
       info.waitingResearchTurnCount--;
     } else {
       // поиск в памяти хода, улучшающего состояние
-      for (let index = hero.memory.contentment.length - 1; index >= 0; index--) {
+      for (let index = (info.lastContentmentIndex || hero.memory.contentment.length) - 1; index >= 0; index--) {
         if (hero.memory.contentment[index].isIncreased) {
           const round = hero.memory.contentment[index].round - 1; // берем ход до обновления состояния
           position = hero.memory.contentment[index].position;
           for (let actionIndex = hero.memory.lastActions.length - 1; actionIndex >= 0; actionIndex--) {
             if (hero.memory.lastActions[actionIndex].round === round) {
+              info.lastContentmentIndex = index;
               info.lastSuccessActionIndex = actionIndex;
               success = true;
               break;
@@ -291,12 +298,12 @@ export class Actions {
         return;
       }
     }
-    if (!!info.lastSuccessActionIndex) {
+    if (!!info.lastContentmentIndex) {
       info.countResearchAndRepeat += 1;
       info.waitingResearchTurnCount = info.countResearchAndRepeat;
     }
     // сбрасываем для нового прохода по памяти
-    info.lastSuccessActionIndex = undefined;
+    info.lastContentmentIndex = undefined;
 
     // подходящего хода нет, совершается случайное действие
     let random = math.randomIntFromInterval(0, availableRandomActions.length - 1);
