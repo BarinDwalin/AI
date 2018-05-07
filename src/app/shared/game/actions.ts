@@ -258,7 +258,7 @@ export class Actions {
         ).forEach((step) => {
           hero.todoStack.push({ action: ActionTypes.Move, args: [{ x: step.x, y: step.y }, hero] });
         });
-        Actions.repeatSuccessActions(hero, successTurn.lastSuccessActionIndex);
+        Actions.repeatSuccessActions(hero, successTurn.lastSuccessActionIndex, true);
         hero.todoStack.push({ action: ActionTypes.ThinkingBestAction, args: [hero, info] });
         return;
       }
@@ -293,16 +293,22 @@ export class Actions {
   }
 
   /** поиск последовательности действий до искомого состояния, остановившись на перемещении */
-  static repeatSuccessActions(hero: Hero, lastSuccessActionIndex: number) {
-    // TODO: остановиться при повторении действий или другая попытка сокращать длинные последовательности
+  static repeatSuccessActions(hero: Hero, lastSuccessActionIndex: number, excludeRepeat: boolean) {
+    // TODO: попытка находить оптимальные последовательности
+    const repetitiveActions: { action: ActionTypes, args?: any[] }[] = [];
     for (let index = lastSuccessActionIndex; index >= 0; index--) {
       const actionInfo = hero.memory.lastActions[index];
       if (actionInfo && !Actions.movingActionList.includes(actionInfo.action)
         && actionInfo.action !== ActionTypes.ThinkingBestAction
       ) {
-        hero.todoStack.push({ action: actionInfo.action, args: actionInfo.args });
+        if (excludeRepeat && repetitiveActions.some((info) => info.action === actionInfo.action)) {
+          // ! не учитываются аргументы действия
+          break;
+        }
+        repetitiveActions.push({ action: actionInfo.action, args: actionInfo.args });
       }
     }
+    hero.todoStack.push(...repetitiveActions);
   }
 
   /** поиск в памяти хода, улучшающего состояние */
