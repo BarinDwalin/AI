@@ -1,12 +1,12 @@
-import { ActionTypes } from '../game/action-types';
-import { ActionResult } from '../game/action-result';
+import { ActionTypes } from '../../game/action-types';
+import { ActionResult } from '../../game/action-result';
 
 import { Dream } from './dream';
 import { HeroStates } from './hero-states';
-import { Item } from './item';
-import { ItemTypes } from './item-types';
+import { Item } from '../item/item';
+import { ItemTypes } from '../item/item-types';
 import { Memory } from './memory';
-import { RenderSettings } from './render-settings';
+import { RenderSettings } from '../render-settings';
 
 
 export class Hero extends Item {

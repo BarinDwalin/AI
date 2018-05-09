@@ -1,5 +1,5 @@
 import { ItemTypes } from './item-types';
-import { ActionTypes } from '../game/action-types';
+import { ActionTypes } from '../../game/action-types';
 
 export class Item {
   /** все объекты на карте */
@@ -7,12 +7,19 @@ export class Item {
 
   name: string;
   type: ItemTypes;
-  todoStack: { action: ActionTypes, args?: any }[] = [];
+  todoStack: { action: ActionTypes, args?: any[] }[] = [];
   /** выполнялись ли действия в данном раунде */
   activated?: boolean;
 
   protected parent: Item;
   private _inventory: Item[] = [];
+
+  get currentAction(): string {
+    if (this.todoStack && this.todoStack[0]) {
+      return ActionTypes[this.todoStack[0].action];
+    }
+    return '...';
+  }
   get inventory() { return this._inventory; }
   get position(): { x: number, y: number } { return this.parent.position; }
 
@@ -21,13 +28,6 @@ export class Item {
     this.type = type;
 
     Item.items.push(this);
-  }
-
-  get currentAction(): string {
-    if (this.todoStack && this.todoStack[0]) {
-      return ActionTypes[this.todoStack[0].action];
-    }
-    return '...';
   }
 
   putInInventory(item: Item) {

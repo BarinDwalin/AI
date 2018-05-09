@@ -1,8 +1,8 @@
-import { ActionTypes } from '../game/action-types';
-import { ActionResult } from '../game/action-result';
+import { ActionTypes } from '../../game/action-types';
+import { ActionResult } from '../../game/action-result';
 
-import { Item } from './item';
-import { ItemTypes } from './item-types';
+import { Item } from '../item/item';
+import { ItemTypes } from '../item/item-types';
 
 export class Memory {
   /** общее состояние, TODO: хранить все изменения / все показатели состояния */
