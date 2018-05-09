@@ -36,6 +36,9 @@ export class Actions {
 
   //#region общие команды
   static growing(tree: Item): ActionResult {
+    if (!(tree instanceof Item) || tree.type !== ItemTypes.Tree) {
+      return new ActionResult(false);
+    }
     // пропускаем 10..15 шагов
     for (let i = 0; i < math.randomIntFromInterval(10, 15); i++) {
       tree.todoStack.push({ action: ActionTypes.Waiting });
@@ -46,18 +49,25 @@ export class Actions {
     return new ActionResult(true);
   }
   static growingApple(tree: Item): ActionResult {
+    if (!(tree instanceof Item) || tree.type !== ItemTypes.Tree) {
+      return new ActionResult(false);
+    }
     tree.putInInventory(ItemFabric.createApple());
     return new ActionResult(true);
   }
 
   static move(positions: {x: number, y: number}, hero: Hero) {
-    if (hero instanceof Hero) {
-      Game.map.moveHero(positions, hero, Game.round);
-    } else {
+    if (!positions || !positions.x || !positions.y || !(hero instanceof Hero)) {
       return new ActionResult(false);
+    } else {
+      Game.map.moveHero(positions, hero, Game.round);
+      return new ActionResult(true);
     }
   }
   static moveRandomDirection(hero: Hero): ActionResult {
+    if (!(hero instanceof Hero)) {
+      return new ActionResult(false);
+    }
     const direction = math.randomIntFromInterval(0, 3);
     let x = hero.position.x;
     let y = hero.position.y;
@@ -101,7 +111,7 @@ export class Actions {
   }
 
   static pickFruits(hero: Hero, tree: Item): ActionResult {
-    if (hero.type !== ItemTypes.Hero && tree.type !== ItemTypes.Tree) {
+    if (!(hero instanceof Hero) || !(tree instanceof Item) || tree.type !== ItemTypes.Tree) {
       return new ActionResult(false);
     }
     if (hero.position.x === tree.position.x && hero.position.y === tree.position.y && tree.inventory.length > 0) {
