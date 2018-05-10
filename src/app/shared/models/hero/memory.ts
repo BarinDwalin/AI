@@ -1,12 +1,15 @@
 import { ActionTypes } from '../../game/action-types';
 import { ActionResult } from '../../game/action-result';
 
+import { HeroInfo } from './hero-info';
 import { Item } from '../item/item';
 import { ItemTypes } from '../item/item-types';
 
 export class Memory {
   /** общее состояние, TODO: хранить все изменения / все показатели состояния */
   contentment: { value: number, round: number, isIncreased: boolean, position: { x: number, y: number } }[];
+  /** все показатели состояния */
+  heroStates: { value: HeroInfo, round: number }[];
   /** последние действия */
   lastActions: { action: ActionTypes, args: any, result: void | ActionResult, round: number } [];
   /** краткосрочная память */
@@ -23,6 +26,7 @@ export class Memory {
 
   constructor(memorySize?: { lastActions: number, shortTerm: number, longTerm: number }) {
     this.contentment = [];
+    this.heroStates = [];
     this.lastActions = [];
     this.shortTerm = [];
     this.longTerm = [];

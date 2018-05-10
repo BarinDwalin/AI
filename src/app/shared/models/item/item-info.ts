@@ -7,4 +7,10 @@ export class ItemInfo {
   type: ItemTypes;
   inventory: ItemInfo[] = [];
   position: { x: number, y: number };
+
+  copy() {
+    const itemCopy: ItemInfo = Object.assign({}, this);
+    itemCopy.inventory = [...this.inventory];
+    return itemCopy;
+  }
 }

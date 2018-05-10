@@ -20,11 +20,21 @@ export class HeroInfo extends ItemInfo {
   /** дальность видимости на карте */
   visibilityDistance: number;
 
-  actions: ActionTypes[] = [];
   /** цель персонажа */
   dream: Dream;
   /** общий уровень удовлетворенности, от -1 до 1*/
   contentment: number;
   /** набор текущих состояний, положительно/отрицательно влияющих на персонажа, от -1 до 1 */
   states: { state: HeroStates, value: number }[];
+
+  copy() {
+    const heroCopy: HeroInfo = Object.assign({}, this);
+    heroCopy.renderSettings = {
+      img: this.renderSettings.img,
+      backgroundColor: this.renderSettings.backgroundColor,
+    };
+    heroCopy.inventory = [...this.inventory];
+    heroCopy.states = this.states.map((state) => ({ state: state.state, value: state.value }));
+    return heroCopy;
+  }
 }
