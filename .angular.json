@@ -2,8 +2,7 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "newProjectRoot": "projects",
-  "project": {
-    "name": "aiengine",
+  "projects": {
     "aiengine": {
       "root": "",
       "sourceRoot": "src",
@@ -117,11 +116,6 @@
           }
         }
       }
-    }
-  },
-  "e2e": {
-    "protractor": {
-      "config": "./protractor.conf.js"
     }
   },
   "defaultProject": "aiengine"

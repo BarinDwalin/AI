@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 
 import { Game, Map } from '../../shared/game';
 import { Cell, Item, ItemTypes, Hero } from '../../shared/models';
