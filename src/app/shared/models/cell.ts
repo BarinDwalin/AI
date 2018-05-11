@@ -1,5 +1,4 @@
-import { Item } from './item';
-import { ItemTypes } from './item-types';
+import { Item, ItemTypes } from './item';
 import { RenderSettings } from './render-settings';
 
 export class Cell extends Item {
