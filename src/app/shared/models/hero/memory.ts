@@ -1,6 +1,7 @@
 import { ActionTypes } from '../../game/action-types';
 import { ActionResult } from '../../game/action-result';
 
+import { Hero } from './hero';
 import { HeroInfo } from './hero-info';
 import { Item } from '../item/item';
 import { ItemTypes } from '../item/item-types';
@@ -40,6 +41,18 @@ export class Memory {
       const lastValue = this.contentment[this.contentment.length - 1].value;
       if (value !== lastValue) {
         this.contentment.push({ value, round, position, isIncreased: (value > lastValue) });
+      }
+    }
+  }
+  rememberHeroState(value: Hero, round: number) {
+    const heroInfo = new HeroInfo(value);
+    if (this.heroStates.length === 0) {
+      this.heroStates.push({ value: heroInfo, round });
+    } else {
+      const lastValue = this.heroStates[this.heroStates.length - 1].value;
+      // TODO: заменить на быструю проверку
+      if (JSON.parse(JSON.stringify(heroInfo)) !== JSON.parse(JSON.stringify(lastValue))) {
+        this.heroStates.push({ value: heroInfo, round });
       }
     }
   }

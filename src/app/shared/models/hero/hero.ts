@@ -21,11 +21,11 @@ export class Hero extends Item {
 
   private actions: ActionTypes[] = [];
   /** цель персонажа */
-  private dream: Dream;
+  dream: Dream;
   /** общий уровень удовлетворенности, от -1 до 1*/
-  private contentment: number;
+  contentment: number;
   /** набор текущих состояний, положительно/отрицательно влияющих на персонажа, от -1 до 1 */
-  private states: { state: HeroStates, value: number }[];
+  states: { state: HeroStates, value: number }[];
 
   get currentContentment() { return this.contentment; }
   get currentStates() { return this.states; }
@@ -51,6 +51,7 @@ export class Hero extends Item {
     this.checkStates();
     this.checkContentment();
     this.memory.rememberContentment(this.contentment, round, this.position);
+    this.memory.rememberHeroState(this, round);
   }
 
   private checkContentment() {

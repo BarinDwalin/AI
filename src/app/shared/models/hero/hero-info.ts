@@ -8,6 +8,7 @@ import { ItemInfo } from '../item/item-info';
 import { ItemTypes } from '../item/item-types';
 import { Memory } from './memory';
 import { RenderSettings } from '../render-settings';
+import { Hero } from './hero';
 
 /** срез общей информации по персонажу (для сохранения состояния) */
 export class HeroInfo extends ItemInfo {
@@ -27,14 +28,21 @@ export class HeroInfo extends ItemInfo {
   /** набор текущих состояний, положительно/отрицательно влияющих на персонажа, от -1 до 1 */
   states: { state: HeroStates, value: number }[];
 
+  constructor(hero: Hero) {
+    super(hero);
+    this.renderSettings = Object.assign({}, hero.renderSettings);
+    this.description = hero.description;
+    this.visibilityDistance = hero.visibilityDistance;
+    this.dream = Object.assign({}, hero.dream);
+    this.contentment = hero.contentment;
+    this.states = hero.states.map((state) => Object.assign({}, state));
+  }
+
   copy() {
     const heroCopy: HeroInfo = Object.assign({}, this);
-    heroCopy.renderSettings = {
-      img: this.renderSettings.img,
-      backgroundColor: this.renderSettings.backgroundColor,
-    };
+    heroCopy.renderSettings = Object.assign({}, this.renderSettings);
     heroCopy.inventory = [...this.inventory];
-    heroCopy.states = this.states.map((state) => ({ state: state.state, value: state.value }));
+    heroCopy.states = this.states.map((state) => Object.assign({}, state));
     return heroCopy;
   }
 }
