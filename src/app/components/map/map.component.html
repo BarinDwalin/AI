@@ -12,6 +12,7 @@
       <app-tree *ngSwitchCase="itemTypesEnum.Tree" [tree]="getUpItem(cell)"></app-tree>
       <app-hero *ngSwitchCase="itemTypesEnum.Hero" [hero]="getUpItem(cell)"
                 [selected]="selectedHero === getUpItem(cell)"></app-hero>
+      <app-item *ngSwitchDefault [item]="getUpItem(cell)"></app-item>
     </div>
   </ng-container>
   <ng-template #memory>

@@ -1,0 +1,7 @@
+<div class="item"
+     [ngStyle]="{
+       'backgroundImage': 'url(../../assets/' + img + ')'
+     }">
+  <span class="current-action">{{item.currentAction | slice:0:9}}</span>
+  <span>{{item.name | slice:0:9}}.</span>
+</div>
