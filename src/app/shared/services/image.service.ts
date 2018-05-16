@@ -11,7 +11,7 @@ export class ImageService {
     this.images[ItemTypes.Food] = 'apple';
     this.images[ItemTypes.Tree] = 'tree';
 
-    this.images.forEach((path) => path += '.svg');
+    this.images = this.images.map((path) => path + '.svg');
   }
 
   getItemImage(type: ItemTypes): string {

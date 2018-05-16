@@ -1,6 +1,7 @@
 import { Component, OnChanges, OnInit, Input } from '@angular/core';
 
 import { Item } from '../../shared/models';
+import { ImageService } from '../../shared/services';
 
 @Component({
   selector: 'app-item',
@@ -10,17 +11,18 @@ import { Item } from '../../shared/models';
 export class ItemComponent implements OnInit, OnChanges {
   @Input() item: Item;
 
-  img = 'item-default.svg';
+  img: string;
 
-  constructor() { }
+  constructor(
+    private imageService: ImageService,
+  ) { }
 
   ngOnInit() {
   }
 
   ngOnChanges() {
     if (this.item) {
-      // TODO: получение изображения по типу объекта
-      this.img = 'item-default.svg';
+      this.img = this.imageService.getItemImage(this.item.type);
     }
   }
 

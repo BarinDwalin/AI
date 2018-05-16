@@ -14,7 +14,7 @@ import {
   TreeComponent,
 } from './components';
 
-import { MapService } from './shared/services';
+import { ImageService, MapService } from './shared/services';
 
 
 @NgModule({
@@ -33,7 +33,7 @@ import { MapService } from './shared/services';
     BrowserModule,
     FormsModule,
   ],
-  providers: [MapService],
+  providers: [ImageService, MapService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
