@@ -1,7 +1,7 @@
 import { Component, OnChanges, OnInit, Input } from '@angular/core';
 
-import { Item } from '../../shared/models';
-import { ImageService } from '../../shared/services';
+import { Item } from '@shared/models';
+import { ImageService } from '@shared/services';
 
 @Component({
   selector: 'app-item',
