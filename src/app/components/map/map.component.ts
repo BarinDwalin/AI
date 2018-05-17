@@ -1,9 +1,9 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { Game, Map } from '../../shared/game';
-import { Cell, Item, ItemTypes, Hero } from '../../shared/models';
-import { MapService } from '../../shared/services';
+import { Game, Map } from '@shared/game';
+import { Cell, Item, ItemTypes, Hero } from '@shared/models';
+import { MapService } from '@shared/services';
 
 
 @Component({

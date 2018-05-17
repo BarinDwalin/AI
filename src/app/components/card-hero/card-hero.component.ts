@@ -1,7 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 
-import { roughSizeOfObject } from '../../shared/game';
-import { Hero, getHeroStateName } from '../../shared/models';
+import { roughSizeOfObject } from '@shared/game';
+import { Hero, getHeroStateName } from '@shared/models';
 
 @Component({
   selector: 'app-card-hero',

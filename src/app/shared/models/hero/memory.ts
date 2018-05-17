@@ -1,5 +1,5 @@
-import { ActionTypes } from '../../game/action-types';
-import { ActionResult } from '../../game/action-result';
+import { ActionTypes } from '@shared/game/action-types';
+import { ActionResult } from '@shared/game/action-result';
 
 import { Hero } from './hero';
 import { HeroInfo } from './hero-info';

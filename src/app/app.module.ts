@@ -14,7 +14,7 @@ import {
   TreeComponent,
 } from './components';
 
-import { ImageService, MapService } from './shared/services';
+import { ImageService, MapService } from '@shared/services';
 
 
 @NgModule({

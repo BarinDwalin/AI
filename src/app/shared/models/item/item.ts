@@ -1,5 +1,5 @@
 import { ItemTypes } from './item-types';
-import { ActionTypes } from '../../game/action-types';
+import { ActionTypes } from '@shared/game/action-types';
 
 export class Item {
   /** все объекты на карте */

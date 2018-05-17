@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { MapSettings } from '../../shared/game';
+import { MapSettings } from '@shared/game';
 
 @Component({
   selector: 'app-map-settings',

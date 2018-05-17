@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
-import { HeroFabric } from '../../shared/game/hero-fabric';
-import { Hero } from '../../shared/models';
-import { MapService } from '../../shared/services';
+import { HeroFabric } from '@shared/game/hero-fabric';
+import { Hero } from '@shared/models';
+import { MapService } from '@shared/services';
 
 @Component({
   selector: 'app-statistic',

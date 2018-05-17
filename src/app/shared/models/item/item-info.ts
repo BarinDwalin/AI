@@ -1,4 +1,4 @@
-import { ActionTypes } from '../../game/action-types';
+import { ActionTypes } from '@shared/game/action-types';
 import { ItemTypes } from './item-types';
 import { Item } from './item';
 
