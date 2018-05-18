@@ -1,5 +1,6 @@
-import { Hero, RenderSettings } from '../models';
-import { ActionTypes } from './action-types';
+import { ActionTypes } from '@shared/game/action-types';
+import { Hero, RenderSettings } from '@shared/models';
+import { ItemFabric } from './item-fabric';
 
 export class HeroFabric {
   static heroConter = 0;
@@ -40,6 +41,7 @@ export class HeroFabric {
     hero.todoStack.push(firstAction);
 
     this.heroes.push(hero);
+    ItemFabric.items.push(hero);
     return hero;
   }
 

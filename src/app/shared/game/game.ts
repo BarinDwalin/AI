@@ -1,4 +1,5 @@
-import { Cell, Hero, ItemTypes, Item } from '../models';
+import { ItemFabric } from '@app/shared/fabrics';
+import { Hero, ItemTypes } from '@shared/models';
 import { Actions } from './actions';
 import { Map } from './map';
 import { MapSettings } from './map-settings';
@@ -40,7 +41,7 @@ export class Game {
           item.activated = true;
         });
       });
-      Item.items.forEach((item) => { item.activated = false; });
+      ItemFabric.items.forEach((item) => { item.activated = false; });
     });
   }
 

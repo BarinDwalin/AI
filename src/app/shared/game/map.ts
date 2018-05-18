@@ -1,9 +1,9 @@
 import * as math from './math';
 
-import { Cell, Hero, Item, ItemTypes } from '../models';
+import { HeroFabric } from '@shared/fabrics/hero-fabric';
+import { ItemFabric } from '@shared/fabrics/item-fabric';
+import { Cell, Hero, Item, ItemTypes } from '@shared/models';
 import { ActionTypes } from './action-types';
-import { HeroFabric } from './hero-fabric';
-import { ItemFabric } from './item-fabric';
 import { MapSettings } from './map-settings';
 
 export class Map {

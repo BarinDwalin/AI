@@ -1,7 +1,7 @@
 import * as math from './math';
 
-import { Hero, Item, ItemTypes } from '../models';
-import { ItemFabric } from './item-fabric';
+import { ItemFabric } from '@shared/fabrics/item-fabric';
+import { Hero, Item, ItemTypes } from '@shared/models';
 import { Action } from './action';
 import { ActionTypes } from './action-types';
 import { Game } from './game';
@@ -161,7 +161,7 @@ export class Actions {
     // поиск точки
     let nearestTree: Item;
     let pathLength: number;
-    Item.items.forEach((item) => {
+    ItemFabric.items.forEach((item) => {
       if (item.type === ItemTypes.Tree && item.inventory.some((itemTree) => itemTree.type === ItemTypes.Food)) {
         const currentPathLength = Math.pow(hero.position.x - item.position.x, 2) +
           Math.pow(hero.position.y - item.position.y, 2);

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, ReplaySubject, Subject } from 'rxjs';
 
-import { Hero } from '../models';
+import { Hero } from '@shared/models';
 
 @Injectable()
 export class MapService {
