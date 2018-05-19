@@ -28,6 +28,9 @@ export class MapComponent implements OnInit, OnDestroy {
     this.selectedHero.memory.shortTerm.forEach((info) => {
       cells[info.cell].items.push(info.item);
     });
+    // текущее положение
+    const cellIndex = this.map.getCellIndex(this.selectedHero.position.x, this.selectedHero.position.y);
+    cells[cellIndex].items.push(this.selectedHero);
     return cells;
   }
   get longTermMemoryMap() {

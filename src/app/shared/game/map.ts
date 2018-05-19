@@ -62,7 +62,9 @@ export class Map {
     }
     return cells;
   }
-
+  getCellIndex(x: number, y: number) {
+    return y * this.width + x;
+  }
   moveHero(position: {x: number, y: number}, hero: Hero, round: number) {
     const newCell = this.getCell(position.x, position.y);
     const oldCell = this.getCell(hero.position.x, hero.position.y);
@@ -104,9 +106,6 @@ export class Map {
       const index = math.randomIntFromInterval(0, this.size - 1);
       this.cells[index].addObject(HeroFabric.createHero(ActionTypes.ThinkingSearchPathWithVisibility));
     }
-  }
-  private getCellIndex(x: number, y: number) {
-    return y * this.width + x;
   }
   private saveNearestObjects(position: {x: number, y: number}, hero: Hero, round: number) {
     this.getCellsInArea(position.x, position.y, hero.visibilityDistance)
