@@ -3,6 +3,7 @@
   grid-template-rows: 10px 10px;
   align-content: space-between;
   height: 100%;
+  overflow: hidden;
   text-align: center;
 }
 
@@ -15,4 +16,6 @@ span {
   font-weight: 600;
   color: red;
   background-color: black;
+  white-space: nowrap;
+  text-overflow: clip;
 }
