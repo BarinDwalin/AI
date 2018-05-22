@@ -50,7 +50,6 @@ export class Hero extends Item {
   refreshState(round: number) {
     this.checkStates();
     this.checkContentment();
-    this.memory.rememberContentment(this.contentment, round, this.position);
     this.memory.rememberHeroState(this, round);
   }
 

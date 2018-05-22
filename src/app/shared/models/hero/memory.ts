@@ -7,8 +7,6 @@ import { Item } from '../item/item';
 import { ItemTypes } from '../item/item-types';
 
 export class Memory {
-  /** общее состояние, TODO: хранить все изменения / все показатели состояния */
-  contentment: { value: number, round: number, isIncreased: boolean, position: { x: number, y: number } }[];
   /** все показатели состояния */
   heroStates: { value: HeroInfo, round: number }[];
   /** последние действия */
@@ -26,7 +24,6 @@ export class Memory {
   };
 
   constructor(memorySize?: { lastActions: number, shortTerm: number, longTerm: number }) {
-    this.contentment = [];
     this.heroStates = [];
     this.lastActions = [];
     this.shortTerm = [];
@@ -34,16 +31,6 @@ export class Memory {
     this.memorySize = memorySize || this.memorySize;
   }
 
-  rememberContentment(value: number, round: number, position: { x: number, y: number }) {
-    if (this.contentment.length === 0) {
-      this.contentment.push({ value, round, position, isIncreased: false });
-    } else {
-      const lastValue = this.contentment[this.contentment.length - 1].value;
-      if (value !== lastValue) {
-        this.contentment.push({ value, round, position, isIncreased: (value > lastValue) });
-      }
-    }
-  }
   rememberHeroState(value: Hero, round: number) {
     const heroInfo = new HeroInfo(value);
     if (this.heroStates.length === 0) {

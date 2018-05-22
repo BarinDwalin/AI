@@ -322,22 +322,22 @@ export class Actions {
   }
 
   /** поиск в памяти хода, улучшающего состояние */
-  static searchIncreaseContentmentTurn(hero: Hero, lastContentmentIndex: number): {
+  static searchIncreaseContentmentTurn(hero: Hero, lastHeroStateIndex: number): {
     success: boolean,
     lastContentmentIndex?: number,
     lastSuccessActionIndex?: number,
     position?: { x: number, y: number },
   } {
-    for (let index = (lastContentmentIndex || hero.memory.contentment.length) - 1; index >= 0; index--) {
-      if (hero.memory.contentment[index].isIncreased) {
-        const round = hero.memory.contentment[index].round - 1; // берем ход до обновления состояния
+    for (let index = (lastHeroStateIndex || hero.memory.heroStates.length) - 1; index > 0; index--) {
+      if (hero.memory.heroStates[index].value > hero.memory.heroStates[index - 1].value) {
+        const round = hero.memory.heroStates[index].round - 1; // берем ход до обновления состояния
         for (let actionIndex = hero.memory.lastActions.length - 1; actionIndex >= 0; actionIndex--) {
           if (hero.memory.lastActions[actionIndex].round === round) {
             return {
               success: true,
               lastContentmentIndex: index,
               lastSuccessActionIndex: actionIndex,
-              position: hero.memory.contentment[index].position,
+              position: hero.memory.heroStates[index].value.position,
             };
           }
         }
