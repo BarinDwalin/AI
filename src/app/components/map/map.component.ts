@@ -2,7 +2,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { Game, Map } from '@shared/game';
-import { Cell, Item, ItemTypes, Hero } from '@shared/models';
+import { Cell, CellInfo, Item, ItemTypes, Hero, HeroInfo } from '@shared/models';
 import { MapService } from '@shared/services';
 
 
@@ -24,13 +24,14 @@ export class MapComponent implements OnInit, OnDestroy {
 
   get shortTermMemoryMap() {
     // подготовка карты
-    const cells: Cell[] = Map.createEmptyMap(this.map.size, this.map.width);
+    const cells: CellInfo[] = Map.createEmptyMap(this.map.size, this.map.width)
+      .map((cell) => new CellInfo(cell));
     this.selectedHero.memory.shortTerm.forEach((info) => {
       cells[info.cell].items.push(info.item);
     });
     // текущее положение
     const cellIndex = this.map.getCellIndex(this.selectedHero.position.x, this.selectedHero.position.y);
-    cells[cellIndex].items.push(this.selectedHero);
+    cells[cellIndex].items.push(new HeroInfo(this.selectedHero));
     return cells;
   }
   get longTermMemoryMap() {

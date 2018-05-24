@@ -1,10 +1,9 @@
 import { ActionTypes } from '@shared/game/action-types';
 import { ActionResult } from '@shared/game/action-result';
+import { Item, ItemInfo, ItemTypes } from '@shared/models';
 
 import { Hero } from './hero';
 import { HeroInfo } from './hero-info';
-import { Item } from '../item/item';
-import { ItemTypes } from '../item/item-types';
 
 export class Memory {
   /** все показатели состояния */
@@ -12,7 +11,7 @@ export class Memory {
   /** последние действия */
   lastActions: { action: ActionTypes, args: any, result: void | ActionResult, round: number } [];
   /** краткосрочная память */
-  shortTerm: { cell: number, round: number, item: Item } [];
+  shortTerm: { cell: number, round: number, item: ItemInfo } [];
   /** долгосрочная память, какие типы объектов и где встречались
    * свалка всего, TODO: квадродерево*/
   longTerm: { cell: number, round: number, item: ItemTypes } [];
@@ -74,11 +73,11 @@ export class Memory {
   }
 
   private rememberItem(cell: number, item: Item, round: number) {
+    const itemInfo = new ItemInfo(item); // TODO: вынести реализацию в сами классы
     if (this.shortTerm.length > this.memorySize.shortTerm) {
       this.shortTerm.shift();
     }
-    const copy = Object.assign({}, item);
-    this.shortTerm.push({ cell, item: copy, round });
+    this.shortTerm.push({ cell, item: itemInfo, round });
   }
   private rememberTypeItem(cell: number, type: ItemTypes, round: number) {
     if (this.longTerm.some((item) => item.cell === cell && item.item === type)) {
