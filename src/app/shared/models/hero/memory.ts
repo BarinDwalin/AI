@@ -73,9 +73,7 @@ export class Memory {
   }
 
   private rememberItem(cell: number, item: Item, round: number) {
-    const itemInfo = item.type === ItemTypes.Hero
-      ? new HeroInfo(item as Hero)
-      : new ItemInfo(item); // TODO: вынести реализацию в сами классы
+    const itemInfo = item.convertToInfo();
     if (this.shortTerm.length > this.memorySize.shortTerm) {
       this.shortTerm.shift();
     }

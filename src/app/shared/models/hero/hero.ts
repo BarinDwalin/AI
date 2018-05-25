@@ -1,13 +1,12 @@
 import { ActionTypes } from '@shared/game/action-types';
 import { ActionResult } from '@shared/game/action-result';
+import { RenderSettings } from '@shared/models';
+import { Item, ItemTypes } from '@shared/models/item';
 
 import { Dream } from './dream';
+import { HeroInfo } from './hero-info';
 import { HeroStates } from './hero-states';
-import { Item } from '../item/item';
-import { ItemTypes } from '../item/item-types';
 import { Memory } from './memory';
-import { RenderSettings } from '../render-settings';
-
 
 export class Hero extends Item {
   renderSettings: RenderSettings = {
@@ -45,6 +44,10 @@ export class Hero extends Item {
       this.renderSettings.img = settings.img || this.renderSettings.img;
       this.renderSettings.backgroundColor = settings.backgroundColor || this.renderSettings.backgroundColor;
     }
+  }
+
+  convertToInfo() {
+    return new HeroInfo(this);
   }
 
   refreshState(round: number) {

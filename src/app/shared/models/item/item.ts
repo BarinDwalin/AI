@@ -1,5 +1,6 @@
-import { ItemTypes } from './item-types';
 import { ActionTypes } from '@shared/game/action-types';
+import { ItemTypes } from './item-types';
+import { ItemInfo } from './item-info';
 
 export class Item {
   name: string;
@@ -25,6 +26,9 @@ export class Item {
     this.type = type;
   }
 
+  convertToInfo() {
+    return new ItemInfo(this);
+  }
   putInInventory(item: Item) {
     item.parent = this;
     this._inventory.push(item);
