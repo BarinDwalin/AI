@@ -1,13 +1,11 @@
 import { ActionTypes } from '@shared/game/action-types';
 import { ActionResult } from '@shared/game/action-result';
 
+import { Item, ItemInfo, ItemTypes } from '@shared/models/item';
+import { RenderSettings } from '@shared/models/render-settings';
 import { Dream } from './dream';
 import { HeroStates } from './hero-states';
-import { Item } from '../item/item';
-import { ItemInfo } from '../item/item-info';
-import { ItemTypes } from '../item/item-types';
 import { Memory } from './memory';
-import { RenderSettings } from '../render-settings';
 import { Hero } from './hero';
 
 /** срез общей информации по персонажу (для сохранения состояния) */

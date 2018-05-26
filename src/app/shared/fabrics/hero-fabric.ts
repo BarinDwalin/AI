@@ -3,9 +3,9 @@ import { Hero, RenderSettings } from '@shared/models';
 import { ItemFabric } from './item-fabric';
 
 export class HeroFabric {
-  static heroConter = 0;
   /** все герои на карте */
   static heroes: Hero[] = [];
+  private static heroConter = 0;
 
   static createHero(ii: ActionTypes): Hero {
     let type: string;

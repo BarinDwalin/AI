@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Game, MapSettings } from './shared/game';
+import { Game, MapSettings } from '@shared/game';
 
 @Component({
   selector: 'app-root',

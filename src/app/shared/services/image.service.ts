@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { ItemTypes } from '../models';
+import { ItemTypes } from '@shared/models';
 
 @Injectable()
 export class ImageService {
