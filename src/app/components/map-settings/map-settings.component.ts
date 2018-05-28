@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnChanges, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { MapSettings } from '@shared/game';
 
 @Component({
@@ -22,7 +22,6 @@ export class MapSettingsComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-    this.rebuildForm();
   }
 
   createForm() {
@@ -34,7 +33,8 @@ export class MapSettingsComponent implements OnInit, OnChanges {
     });
   }
   onSubmit() {
-    // this.settings = this.prepareSaveSettings();
+    this.settings = this.prepareSaveSettings();
+    console.log(this.settings);
     this.createGame.next(this.settings);
   }
 
@@ -46,24 +46,46 @@ export class MapSettingsComponent implements OnInit, OnChanges {
     });
   }
   revert() { this.rebuildForm(); }
-
+  prepareSaveSettings(): MapSettings {
+    const formModel = this.settingsForm.value;
+    const saveMapSettings: MapSettings = {
+      heroesCount: Object.assign({}, formModel.heroesCount),
+      mapSize: formModel.mapSize,
+      treesCount: formModel.treesCount,
+    };
+    return saveMapSettings;
+  }
 
   increaseMapSize() {
-    this.settings.mapSize++;
+    this.updateField('mapSize', 1);
   }
   decreaseMapSize() {
-    this.settings.mapSize--;
+    this.updateField('mapSize', -1);
   }
   addTree() {
-    this.settings.treesCount++;
+    this.updateField('treesCount', 1);
   }
   removeTree() {
-    this.settings.treesCount--;
+    this.updateField('treesCount', -1);
   }
   addHero(hero: string) {
-    this.settings.heroesCount[hero]++;
+    this.updateHeroesCount(hero, 1);
   }
   removeHero(hero: string) {
-    this.settings.heroesCount[hero]--;
+    this.updateHeroesCount(hero, -1);
+  }
+
+  private updateField(field: string, change: number) {
+    const value = this.settingsForm.get(field).value + change;
+    this.settingsForm.patchValue({
+      [field]: value,
+    });
+  }
+  private updateHeroesCount(hero: string, change: number) {
+    const heroesCountControl: AbstractControl = this.settingsForm.get('heroesCount');
+    const heroesCount = heroesCountControl.get(hero).value + change;
+    heroesCountControl.patchValue({
+      [hero]: heroesCount,
+    });
   }
 }
