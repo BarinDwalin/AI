@@ -15,6 +15,7 @@ import {
 } from './components';
 
 import { ImageService, MapService } from '@shared/services';
+import { HeroSettingsComponent } from './components/map-settings/hero-settings/hero-settings.component';
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import { ImageService, MapService } from '@shared/services';
     MapSettingsComponent,
     StatisticComponent,
     TreeComponent,
+    HeroSettingsComponent,
   ],
   imports: [
     BrowserModule,

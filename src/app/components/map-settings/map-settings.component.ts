@@ -68,24 +68,11 @@ export class MapSettingsComponent implements OnInit, OnChanges {
   removeTree() {
     this.updateField('treesCount', -1);
   }
-  addHero(hero: string) {
-    this.updateHeroesCount(hero, 1);
-  }
-  removeHero(hero: string) {
-    this.updateHeroesCount(hero, -1);
-  }
 
   private updateField(field: string, change: number) {
     const value = this.settingsForm.get(field).value + change;
     this.settingsForm.patchValue({
       [field]: value,
-    });
-  }
-  private updateHeroesCount(hero: string, change: number) {
-    const heroesCountControl: AbstractControl = this.settingsForm.get('heroesCount');
-    const heroesCount = heroesCountControl.get(hero).value + change;
-    heroesCountControl.patchValue({
-      [hero]: heroesCount,
     });
   }
 }
