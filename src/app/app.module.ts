@@ -16,6 +16,8 @@ import {
 
 import { ImageService, MapService } from '@shared/services';
 import { HeroSettingsComponent } from './components/map-settings/hero-settings/hero-settings.component';
+import { WizardComponent } from '@shared/components/wizard/wizard.component';
+import { WizardStepComponent } from '@shared/components/wizard/wizard-step/wizard-step.component';
 
 
 @NgModule({
@@ -30,6 +32,9 @@ import { HeroSettingsComponent } from './components/map-settings/hero-settings/h
     StatisticComponent,
     TreeComponent,
     HeroSettingsComponent,
+    MultiStepFormComponent,
+    WizardComponent,
+    WizardStepComponent,
   ],
   imports: [
     BrowserModule,
