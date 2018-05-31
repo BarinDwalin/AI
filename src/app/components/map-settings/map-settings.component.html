@@ -1,21 +1,32 @@
 <form [formGroup]="settingsForm" class="new-game-menu" (submit)="onSubmit()">
-  <div class="counter map">
-    <div>Размер карты</div>
-    <input type="number" formControlName="mapSize">
-    <button type="button" (click)="increaseMapSize()">+</button>
-    <button type="button" (click)="decreaseMapSize()">-</button>
-  </div>
-  <div class="counter trees">
-    <div>Деревьев</div>
-    <input type="number" formControlName="treesCount">
-    <button type="button" (click)="addTree()">+</button>
-    <button type="button" (click)="removeTree()">-</button>
-  </div>
-  <app-hero-settings [formGroup]="heroesCount"></app-hero-settings>
-
-  <div class="new-game">
-    <button button type="submit">Создать игру</button>
-  </div>
+  <app-wizard>
+  <app-wizard-step title="Параметры карты" (onNext)="onStep1Next($event)">
+    <h1>Параметры карты</h1>
+    <div class="counter map">
+      <div>Размер карты</div>
+      <input type="number" formControlName="mapSize">
+      <button type="button" (click)="increaseMapSize()">+</button>
+      <button type="button" (click)="decreaseMapSize()">-</button>
+    </div>
+    <div class="counter trees">
+      <div>Деревьев</div>
+      <input type="number" formControlName="treesCount">
+      <button type="button" (click)="addTree()">+</button>
+      <button type="button" (click)="removeTree()">-</button>
+    </div>
+  </app-wizard-step>
+  <app-wizard-step title="Параметры генерации персонажей">
+    <h1>Параметры генерации персонажей</h1>
+    <!--<app-hero-settings [form]="settings.heroesCount"></app-hero-settings>-->
+  </app-wizard-step>
+  <app-wizard-step title="конец" (onComplete)="onSubmit()">
+    <h1>Готово</h1>
+    <h4>Thank you! You have completed all the steps.</h4>
+    <div class="new-game">
+      <button button type="submit">Создать игру</button>
+    </div>
+  </app-wizard-step>
+</app-wizard>
 </form>
 
 <p>Form value: {{ settingsForm.value | json }}</p>

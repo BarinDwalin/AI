@@ -7,6 +7,7 @@ import {
   CardHeroComponent,
   GameMenuComponent,
   HeroComponent,
+  HeroSettingsComponent,
   ItemComponent,
   MapComponent,
   MapSettingsComponent,
@@ -14,11 +15,8 @@ import {
   TreeComponent,
 } from './components';
 
+import { SharedModule } from '@shared/shared.module';
 import { ImageService, MapService } from '@shared/services';
-import { HeroSettingsComponent } from './components/map-settings/hero-settings/hero-settings.component';
-import { WizardComponent } from '@shared/components/wizard/wizard.component';
-import { WizardStepComponent } from '@shared/components/wizard/wizard-step/wizard-step.component';
-
 
 @NgModule({
   declarations: [
@@ -32,16 +30,13 @@ import { WizardStepComponent } from '@shared/components/wizard/wizard-step/wizar
     StatisticComponent,
     TreeComponent,
     HeroSettingsComponent,
-    MultiStepFormComponent,
-    WizardComponent,
-    WizardStepComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
+    SharedModule,
   ],
-  providers: [ImageService, MapService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
