@@ -1,11 +1,17 @@
 .new-game-menu {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  /*grid-template-columns: repeat(5, 1fr);
   grid-template-rows: 50px 50px 50px 1fr;
   width: fit-content;
-  grid-column-gap: 20px;
+  grid-column-gap: 20px;*/
   border: solid gray 1px;
   margin-bottom: 20px;
+}
+
+form {
+  max-width: 800px;
+  min-height: 500px;
+  max-height: 500px;
 }
 
 .counter.map {
@@ -21,8 +27,6 @@
   width: 30px;
 }
 .new-game {
-  grid-column-start: 1;
-  grid-column-end:   6;
   text-align: center;
 }
 .new-game button {
