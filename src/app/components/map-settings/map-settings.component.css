@@ -1,9 +1,5 @@
 .new-game-menu {
   display: grid;
-  /*grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: 50px 50px 50px 1fr;
-  width: fit-content;
-  grid-column-gap: 20px;*/
   border: solid gray 1px;
   margin-bottom: 20px;
 }
@@ -14,18 +10,13 @@ form {
   max-height: 500px;
 }
 
-.counter.map {
-  grid-column-end: span 5;
-}
-.counter.trees {
-  grid-column-end: span 5;
-}
-.counter input {
+::ng-deep .counter input {
   width: 30px;
 }
-.counter button {
+::ng-deep .counter button {
   width: 30px;
 }
+
 .new-game {
   text-align: center;
 }

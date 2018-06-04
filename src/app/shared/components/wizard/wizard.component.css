@@ -10,6 +10,6 @@
 .disabled { color: rgb(235, 188, 188); }
 .completed { cursor: default; }
 .btn { border: 1px solid transparent; border-color: #ccc; background-color: #fff;
-  font-size: 1rem; border-radius: .25rem; padding: .5rem 1rem; }
+  font-size: 1rem; cursor: pointer; border-radius: .25rem; padding: .5rem 1rem; }
 .btn.float-left { float: left; }
 .btn.float-right { float: right; }

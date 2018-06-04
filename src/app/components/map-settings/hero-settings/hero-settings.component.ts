@@ -8,22 +8,12 @@ import { MapSettings } from '@app/shared/game';
   styleUrls: ['./hero-settings.component.css']
 })
 export class HeroSettingsComponent implements OnInit {
-  @Input() settings: MapSettings;
-  settingsForm: FormGroup;
+  @Input() form: FormGroup;
 
-  constructor(
-    private fb: FormBuilder,
-  ) {
-    //this.createForm();
-  }
+  constructor() { }
 
   ngOnInit() {
   }
-
-
-  rebuildForm() {
-  }
-  revert() { this.rebuildForm(); }
 
   addHero(hero: string) {
     this.updateHeroesCount(hero, 1);
@@ -33,7 +23,7 @@ export class HeroSettingsComponent implements OnInit {
   }
 
   private updateHeroesCount(hero: string, change: number) {
-    const heroesCountControl: AbstractControl = this.settingsForm.get('heroesCount');
+    const heroesCountControl: AbstractControl = this.form.get('heroesCount');
     const heroesCount = heroesCountControl.get(hero).value + change;
     heroesCountControl.patchValue({
       [hero]: heroesCount,
