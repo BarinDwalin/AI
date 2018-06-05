@@ -1,5 +1,5 @@
 
-import { Component, Output, EventEmitter, ContentChildren, QueryList, AfterContentInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ContentChildren, QueryList, AfterContentInit } from '@angular/core';
 import { WizardStepComponent } from './wizard-step/wizard-step.component';
 
 @Component({
@@ -10,6 +10,11 @@ import { WizardStepComponent } from './wizard-step/wizard-step.component';
 export class WizardComponent implements AfterContentInit {
   @ContentChildren(WizardStepComponent)
   wizardSteps: QueryList<WizardStepComponent>;
+  @Input() buttonSettings: {
+    previousButtonName?: string,
+    nextButtonName?: string,
+    completeButtonName?: string,
+  };
 
   private _steps: Array<WizardStepComponent> = [];
   private _isCompleted = false;

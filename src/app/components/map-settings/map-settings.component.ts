@@ -15,6 +15,9 @@ export class MapSettingsComponent implements OnInit, OnChanges {
   @Output() createGame = new EventEmitter<MapSettings>();
   settings = new MapSettings();
   settingsForm: FormGroup;
+  buttonSettings = {
+    completeButtonName: 'Создать карту',
+  };
 
   constructor(
     private fb: FormBuilder,

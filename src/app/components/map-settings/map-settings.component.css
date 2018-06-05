@@ -1,13 +1,10 @@
-.new-game-menu {
-  display: grid;
-  border: solid gray 1px;
-  margin-bottom: 20px;
-}
-
 form {
+  display: grid;
   max-width: 800px;
   min-height: 500px;
   max-height: 500px;
+  border: solid gray 1px;
+  margin-bottom: 20px;
 }
 
 ::ng-deep .counter input {
@@ -16,14 +13,3 @@ form {
 ::ng-deep .counter button {
   width: 30px;
 }
-
-.new-game {
-  text-align: center;
-}
-.new-game button {
-  height: 50px;
-  width: 200px;
-  background-color: darkgreen;
-  color: white;
-}
-

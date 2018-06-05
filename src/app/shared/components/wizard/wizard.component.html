@@ -14,15 +14,15 @@
   <div class="card-footer" [hidden]="isCompleted">
       <button type="button" class="btn float-left" (click)="previous()"
               [hidden]="!hasPrevStep || !activeStep.showPrev">
-        Назад
+        {{buttonSettings?.previousButtonName || 'Назад'}}
       </button>
       <button type="button" class="btn float-right" (click)="next()"
               [disabled]="!activeStep.isValid" [hidden]="!hasNextStep || !activeStep.showNext">
-        Далее
+        {{buttonSettings?.nextButtonName || 'Далее'}}
       </button>
       <button type="button" class="btn float-right" (click)="complete()"
               [disabled]="!activeStep.isValid" [hidden]="hasNextStep">
-        Завершить
+        {{buttonSettings?.completeButtonName || 'Готово'}}
       </button>
   </div>
 </div>

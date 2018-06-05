@@ -1,18 +1,12 @@
-<form [formGroup]="settingsForm" class="new-game-menu" (submit)="onSubmit()">
-  <app-wizard>
+<form [formGroup]="settingsForm" (submit)="onSubmit()">
+  <app-wizard [buttonSettings]="buttonSettings">
     <app-wizard-step title="Параметры карты">
       <h1>Параметры карты</h1>
       <app-land-settings [form]="settingsForm"></app-land-settings>
     </app-wizard-step>
-    <app-wizard-step title="Параметры генерации персонажей">
+    <app-wizard-step title="Параметры генерации персонажей" (complete)="onSubmit()">
       <h1>Число генерируемых персонажей</h1>
       <app-hero-settings [form]="settingsForm"></app-hero-settings>
-    </app-wizard-step>
-    <app-wizard-step title="Заглушка" (complete)="onSubmit()">
-      <h1>Готово</h1>
-      <div class="new-game">
-        <button button type="submit">Создать игру</button>
-      </div>
     </app-wizard-step>
   </app-wizard>
 </form>
