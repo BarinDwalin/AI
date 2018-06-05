@@ -7,15 +7,17 @@ import {
   CardHeroComponent,
   GameMenuComponent,
   HeroComponent,
+  HeroSettingsComponent,
   ItemComponent,
+  LandSettingsComponent,
   MapComponent,
   MapSettingsComponent,
   StatisticComponent,
   TreeComponent,
 } from './components';
 
+import { SharedModule } from '@shared/shared.module';
 import { ImageService, MapService } from '@shared/services';
-
 
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import { ImageService, MapService } from '@shared/services';
     CardHeroComponent,
     GameMenuComponent,
     HeroComponent,
+    HeroSettingsComponent,
     ItemComponent,
+    LandSettingsComponent,
     MapComponent,
     MapSettingsComponent,
     StatisticComponent,
@@ -33,8 +37,8 @@ import { ImageService, MapService } from '@shared/services';
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
+    SharedModule,
   ],
-  providers: [ImageService, MapService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

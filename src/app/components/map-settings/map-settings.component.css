@@ -1,28 +1,23 @@
 .new-game-menu {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: 50px 50px 50px 1fr;
-  width: fit-content;
-  grid-column-gap: 20px;
   border: solid gray 1px;
   margin-bottom: 20px;
 }
 
-.counter.map {
-  grid-column-end: span 5;
+form {
+  max-width: 800px;
+  min-height: 500px;
+  max-height: 500px;
 }
-.counter.trees {
-  grid-column-end: span 5;
-}
-.counter input {
+
+::ng-deep .counter input {
   width: 30px;
 }
-.counter button {
+::ng-deep .counter button {
   width: 30px;
 }
+
 .new-game {
-  grid-column-start: 1;
-  grid-column-end:   6;
   text-align: center;
 }
 .new-game button {

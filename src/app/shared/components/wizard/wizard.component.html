@@ -1,0 +1,28 @@
+<div class="card">
+  <div class="card-header">
+    <ul class="nav">
+      <li class="nav-item" *ngFor="let step of steps"
+          [ngClass]="{'active': step.isActive, 'enabled': !step.isDisabled,
+            'disabled': step.isDisabled, 'completed': isCompleted}">
+        <a (click)="goToStep(step)">{{step.title}}</a>
+      </li>
+    </ul>
+  </div>
+  <div class="card-block">
+    <ng-content></ng-content>
+  </div>
+  <div class="card-footer" [hidden]="isCompleted">
+      <button type="button" class="btn float-left" (click)="previous()"
+              [hidden]="!hasPrevStep || !activeStep.showPrev">
+        Назад
+      </button>
+      <button type="button" class="btn float-right" (click)="next()"
+              [disabled]="!activeStep.isValid" [hidden]="!hasNextStep || !activeStep.showNext">
+        Далее
+      </button>
+      <button type="button" class="btn float-right" (click)="complete()"
+              [disabled]="!activeStep.isValid" [hidden]="hasNextStep">
+        Завершить
+      </button>
+  </div>
+</div>
