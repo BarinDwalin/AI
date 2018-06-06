@@ -10,6 +10,14 @@ import { MapSettings } from '@app/shared/game';
 export class HeroSettingsComponent implements OnInit {
   @Input() form: FormGroup;
 
+  heroes = [
+    'thinkingBestAction',
+    'thinkingRandom',
+    'thinkingPickAndRandomMove',
+    'thinkingSearchPathWithFullMap',
+    'thinkingSearchPathWithVisibility',
+  ];
+
   constructor() { }
 
   ngOnInit() {
