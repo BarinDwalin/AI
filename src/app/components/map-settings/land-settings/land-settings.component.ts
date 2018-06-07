@@ -13,6 +13,9 @@ import { MapSettings } from '@app/shared/game';
 export class LandSettingsComponent implements OnInit {
   @Input() form: FormGroup;
 
+  get mapSize() { return this.form.get(['landSettings', 'mapSize']); }
+  get treesCount() { return this.form.get(['landSettings', 'treesCount']); }
+
   constructor() { }
 
   ngOnInit() {
@@ -33,6 +36,9 @@ export class LandSettingsComponent implements OnInit {
 
   private updateField(field: string, change: number) {
     const value = this.form.get(['landSettings', field]).value + change;
+    if (value < 0) {
+      return;
+    }
     this.form.get('landSettings').patchValue({
       [field]: value,
     });

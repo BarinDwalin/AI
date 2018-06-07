@@ -2,13 +2,13 @@
   <div formGroupName="landSettings">
     <div class="counter">
       <div>Размер карты</div>
-      <input type="number" formControlName="mapSize">
+      <input id="mapSize" type="number" min="0" formControlName="mapSize">
       <button type="button" (click)="increaseMapSize()">+</button>
       <button type="button" (click)="decreaseMapSize()">-</button>
     </div>
     <div class="counter">
       <div>Деревьев</div>
-      <input type="number" formControlName="treesCount">
+      <input type="number" min="0" formControlName="treesCount">
       <button type="button" (click)="addTree()">+</button>
       <button type="button" (click)="removeTree()">-</button>
     </div>

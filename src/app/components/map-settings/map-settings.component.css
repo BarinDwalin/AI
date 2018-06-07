@@ -13,3 +13,7 @@ form {
 ::ng-deep .counter button {
   width: 30px;
 }
+
+::ng-deep input.ng-invalid{
+  border-color: red;
+ }

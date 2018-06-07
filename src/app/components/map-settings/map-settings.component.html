@@ -1,10 +1,11 @@
 <form [formGroup]="settingsForm" (submit)="onSubmit()">
   <app-wizard [buttonSettings]="buttonSettings">
-    <app-wizard-step title="Параметры карты">
+    <app-wizard-step title="Параметры карты" [isValid]="settingsForm.valid">
       <h1>Параметры карты</h1>
       <app-land-settings [form]="settingsForm"></app-land-settings>
     </app-wizard-step>
-    <app-wizard-step title="Параметры генерации персонажей" (complete)="onSubmit()">
+    <app-wizard-step title="Параметры генерации персонажей"
+                     [isValid]="settingsForm.valid" (complete)="onSubmit()">
       <h1>Число генерируемых персонажей</h1>
       <app-hero-settings [form]="settingsForm"></app-hero-settings>
     </app-wizard-step>

@@ -33,14 +33,19 @@ export class MapSettingsComponent implements OnInit, OnChanges {
 
   createForm() {
     this.settingsForm = this.fb.group({
-      heroesCount: this.fb.group(this.settings.heroesCount),
+      heroesCount: this.fb.group(this.settings.heroesCount,
+        // ! extra params не применяются
+        { validator: Validators.compose([ Validators.required, Validators.min(0) ]) }),
       landSettings: this.fb.group({
-        mapSize: [ this.settings.mapSize, Validators.required ],
-        treesCount: this.settings.treesCount,
+        mapSize: [ this.settings.mapSize, [ Validators.required, Validators.min(5) ] ],
+        treesCount: [ this.settings.treesCount, [ Validators.required, Validators.min(0) ] ],
       }),
     });
   }
   onSubmit() {
+    if (this.settingsForm.invalid) {
+      return;
+    }
     const settings = this.prepareSaveSettings();
     this.createGame.next(settings);
   }
