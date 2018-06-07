@@ -1,34 +1,10 @@
 <div [formGroup]="form">
   <div formGroupName="heroesCount">
-    <div class="counter">
-      <div>thinkingRandom</div>
-      <input type="number" formControlName="thinkingRandom">
-      <button type="button" (click)="addHero('thinkingRandom')">+</button>
-      <button type="button" (click)="removeHero('thinkingRandom')">-</button>
-    </div>
-    <div class="counter">
-      <div>thinkingPickAndRandomMove</div>
-      <input type="number" formControlName="thinkingPickAndRandomMove">
-      <button type="button" (click)="addHero('thinkingPickAndRandomMove')">+</button>
-      <button type="button" (click)="removeHero('thinkingPickAndRandomMove')">-</button>
-    </div>
-    <div class="counter">
-      <div>thinkingSearchPathWithFullMap</div>
-      <input type="number" formControlName="thinkingSearchPathWithFullMap">
-      <button type="button" (click)="addHero('thinkingSearchPathWithFullMap')">+</button>
-      <button type="button" (click)="removeHero('thinkingSearchPathWithFullMap')">-</button>
-    </div>
-    <div class="counter">
-      <div>thinkingSearchPathWithVisibility</div>
-      <input type="number" formControlName="thinkingSearchPathWithVisibility">
-      <button type="button" (click)="addHero('thinkingSearchPathWithVisibility')">+</button>
-      <button type="button" (click)="removeHero('thinkingSearchPathWithVisibility')">-</button>
-    </div>
-    <div class="counter">
-      <div>thinkingBestAction</div>
-      <input type="number" formControlName="thinkingBestAction">
-      <button type="button" (click)="addHero('thinkingBestAction')">+</button>
-      <button type="button" (click)="removeHero('thinkingBestAction')">-</button>
+    <div *ngFor="let hero of heroes" class="counter">
+      <div>{{hero}}</div>
+      <input type="number" [formControlName]="hero">
+      <button type="button" (click)="addHero(hero)">+</button>
+      <button type="button" (click)="removeHero(hero)">-</button>
     </div>
   </div>
 </div>
