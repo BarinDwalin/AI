@@ -3,10 +3,11 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ImageService, MapService } from '@shared/services';
-import { WizardComponent, WizardStepComponent } from '@shared/components';
+import { InputNumberComponent, WizardComponent, WizardStepComponent } from '@shared/components';
 
 @NgModule({
   declarations: [
+    InputNumberComponent,
     WizardComponent,
     WizardStepComponent,
   ],
