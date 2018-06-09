@@ -77,4 +77,8 @@ export class MapComponent implements OnInit, OnDestroy {
       return this.getUpItem(cell).type;
     }
   }
+
+  select(hero: Hero) {
+    this.mapService.setSelectedHero(hero);
+  }
 }
