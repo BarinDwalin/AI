@@ -81,4 +81,7 @@ export class MapComponent implements OnInit, OnDestroy {
   select(hero: Hero) {
     this.mapService.setSelectedHero(hero);
   }
+  cancelSelected() {
+    this.mapService.setSelectedHero(null);
+  }
 }

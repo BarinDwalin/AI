@@ -7,6 +7,10 @@
   text-align: center;
 }
 
+.hero.selected {
+  cursor: pointer;
+}
+
 .current-action {
   color: green;
 }

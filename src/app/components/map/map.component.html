@@ -26,7 +26,8 @@
            [ngStyle]="!cell.items.length && { 'backgroundImage': 'url(../../assets/' + cell.renderSettings.img + ')' }">
         <app-tree *ngSwitchCase="itemTypesEnum.Tree" [tree]="getUpItem(cell)"></app-tree>
         <app-hero *ngSwitchCase="itemTypesEnum.Hero" [hero]="getUpItem(cell)"
-                  [selected]="selectedHero.name === getUpItem(cell).name"></app-hero>
+                  [selected]="selectedHero.name === getUpItem(cell).name"
+                  (click)="cancelSelected()"></app-hero>
       </div>
     </ng-template>
     <ng-template #longTermMemory>
