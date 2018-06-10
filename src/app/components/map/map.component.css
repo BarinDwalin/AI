@@ -6,3 +6,7 @@
 .cell {
   border: solid gray 1px;
 }
+
+.selectable {
+  cursor: pointer;
+}
