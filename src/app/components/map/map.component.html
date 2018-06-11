@@ -32,8 +32,11 @@
       </div>
     </ng-template>
     <ng-template #longTermMemory>
-      <div *ngFor="let img of longTermMemoryMap" class="cell"
+      <div *ngFor="let img of longTermMemoryMap; let i = index" class="cell"
            [ngStyle]="{ 'backgroundImage': 'url(../../assets/' + img + ')' }">
+           <app-hero *ngIf="selectedHeroCellIndex === i"
+                     [hero]="selectedHero" [selected]='true'
+                     (click)="cancelSelected(selectedHero.name)"></app-hero>
       </div>
     </ng-template>
   </ng-template>

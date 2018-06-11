@@ -22,6 +22,14 @@ export class MapComponent implements OnInit, OnDestroy {
 
   get map() { return Game.map; }
 
+  get selectedHeroCellIndex() {
+    if (!this.selectedHero) {
+      return null;
+    } else {
+      return this.map.getCellIndex(this.selectedHero.position.x, this.selectedHero.position.y);
+    }
+  }
+
   get shortTermMemoryMap() {
     // подготовка карты
     const cells: CellInfo[] = Map.createEmptyMap(this.map.size, this.map.width)
