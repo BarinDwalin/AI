@@ -8,7 +8,6 @@ import { Game, MapSettings } from '@shared/game';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'Собиратели яблок';
   game: Game;
 
   get isGameRunning() { return !!Game.map; }

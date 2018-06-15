@@ -1,8 +1,4 @@
-<header>
-  <h1>
-    {{ title }}
-  </h1>
-</header>
+<app-header></app-header>
 
 <app-map-settings *ngIf="!isGameRunning" (createGame)="createGame($event)"></app-map-settings>
 
@@ -13,5 +9,4 @@
   <app-statistic></app-statistic>
 </div>
 
-
-
+<app-footer></app-footer>

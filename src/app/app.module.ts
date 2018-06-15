@@ -16,6 +16,7 @@ import {
   TreeComponent,
 } from './components';
 
+import { CoreModule } from '@core/core.module';
 import { SharedModule } from '@shared/shared.module';
 import { ImageService, MapService } from '@shared/services';
 
@@ -34,6 +35,7 @@ import { ImageService, MapService } from '@shared/services';
     TreeComponent,
   ],
   imports: [
+    CoreModule,
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,

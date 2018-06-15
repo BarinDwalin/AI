@@ -20,6 +20,7 @@
       "@app/*": ["app/*"],
       "@assets/*": ["assets/*"],
       "@components/*": ["app/components/*"],
+      "@core/*": ["app/core/*"],
       "@shared/*": ["app/shared/*"]
     }
   }
