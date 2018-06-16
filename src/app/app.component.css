@@ -14,7 +14,7 @@
   }
 }
 
-.content > h1 {
+h1 {
   text-align: center;
 }
 
@@ -22,9 +22,18 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-column-gap: 20px;
+  grid-row-gap: 20px;
 }
-
 .page .header {
   grid-column-start: 1;
   grid-column-end:   3;
+}
+
+@media all and (max-width: 1050px) {
+  .page {
+    grid-template-columns: 1fr;
+  }
+  .page .header {
+    grid-column-end: 2;
+  }
 }
