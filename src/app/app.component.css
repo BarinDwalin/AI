@@ -21,8 +21,8 @@ h1 {
 .page {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-column-gap: 20px;
-  grid-row-gap: 20px;
+  grid-column-gap: 10px;
+  grid-row-gap: 10px;
 }
 .page .header {
   grid-column-start: 1;

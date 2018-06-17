@@ -1,11 +1,22 @@
+:host {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 10px;
+  grid-row-gap: 10px;
+}
+
+@media all and (max-width: 1550px) {
+  :host {
+    grid-template-columns: 1fr;
+  }
+}
+
 .statistic {
   display: grid;
   grid-row-gap: 5px;
   width: 500px;
   /* height: 500px;*/
   border: solid black 5px;
-
-  margin-bottom: 20px;
 }
 
 .row {
