@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 
 import { roughSizeOfObject } from '@shared/game';
 import { Hero, getHeroStateName } from '@shared/models';
@@ -8,7 +8,7 @@ import { Hero, getHeroStateName } from '@shared/models';
   templateUrl: './card-hero.component.html',
   styleUrls: ['./card-hero.component.css']
 })
-export class CardHeroComponent implements OnInit, OnDestroy {
+export class CardHeroComponent implements OnInit, OnDestroy, OnChanges {
   @Input() hero: Hero;
 
   memory: string;
@@ -19,13 +19,18 @@ export class CardHeroComponent implements OnInit, OnDestroy {
   constructor() { }
 
   ngOnInit() {
-    // пересчитываем реже, для снижения нагрузки
-    this.timer = setInterval(() => {
-      this.memory = this.checkMemory(this.hero);
-    }, 5000);
   }
+
   ngOnDestroy() {
     clearInterval(this.timer);
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    this.memory = null;
+  }
+
+  calcMemory() {
+    this.memory = this.checkMemory(this.hero);
   }
 
   private checkMemory(hero: Hero) {
