@@ -9,7 +9,7 @@ import { NgModel } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class InputNumberComponent implements OnInit {
-  @ViewChild(NgModel) model: NgModel;
+  @ViewChild(NgModel, { static: true }) model: NgModel;
 
   value: number;
 
