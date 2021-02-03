@@ -32,10 +32,12 @@ export class GameMenuComponent implements OnInit {
   }
 
   run() {
+    gtag('event', 'run');
     this.game.run();
   }
 
   stop() {
+    gtag('event', 'stop');
     this.game.stop();
   }
 }
